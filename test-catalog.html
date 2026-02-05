@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Category Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+        }
+
+        .test-card {
+            background: #222;
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #ff0000;
+            cursor: pointer;
+        }
+
+        .test-card button {
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #333;
+            border: 2px solid #00ff00;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test de Filtro de Categorías</h1>
+
+    <div class="test-card" data-filter="cupulas">
+        <h3>CÚPULAS</h3>
+        <button type="button" class="filter-btn">Ver productos →</button>
+    </div>
+
+    <div class="test-card" data-filter="espejos">
+        <h3>ESPEJOS</h3>
+        <button type="button" class="filter-btn">Ver productos →</button>
+    </div>
+
+    <div id="result" class="hidden">
+        <h2>Productos cargados:</h2>
+        <p id="category-name"></p>
+        <p id="click-count">Clicks: 0</p>
+    </div>
+
+    <script>
+        let clickCount = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Test page loaded');
+
+            const cards = document.querySelectorAll('.test-card');
+            console.log('Found cards:', cards.length);
+
+            cards.forEach(card => {
+                const button = card.querySelector('.filter-btn');
+
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    clickCount++;
+                    const category = card.dataset.filter;
+
+                    console.log('Button clicked:', category);
+
+                    const result = document.getElementById('result');
+                    const categoryName = document.getElementById('category-name');
+                    const clickCountEl = document.getElementById('click-count');
+
+                    result.classList.remove('hidden');
+                    categoryName.textContent = 'Categoría: ' + category.toUpperCase();
+                    clickCountEl.textContent = 'Clicks: ' + clickCount;
+
+                    return false;
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
