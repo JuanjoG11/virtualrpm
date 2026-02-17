@@ -198,6 +198,79 @@ const products = [
     }
 ];
 
+// Brands and Models Database
+const motorcycles = [
+    {
+        id: 'yamaha',
+        name: 'YAMAHA',
+        logo: 'images/yamaha.jpg',
+        models: [
+            { id: 'mt03', name: 'MT-03' },
+            { id: 'mt07', name: 'MT-07' },
+            { id: 'mt09', name: 'MT-09' },
+            { id: 'r1', name: 'YZF-R1' },
+            { id: 'r6', name: 'YZF-R6' },
+            { id: 'nmax', name: 'NMAX' }
+        ]
+    },
+    {
+        id: 'kawasaki',
+        name: 'KAWASAKI',
+        logo: 'images/kawasaki.png',
+        models: [
+            { id: 'z400', name: 'Z400' },
+            { id: 'z900', name: 'Z900' },
+            { id: 'ninja400', name: 'Ninja 400' },
+            { id: 'zx6r', name: 'ZX-6R' },
+            { id: 'versys650', name: 'Versys 650' }
+        ]
+    },
+    {
+        id: 'suzuki',
+        name: 'SUZUKI',
+        logo: 'images/suzuki.jpg',
+        models: [
+            { id: 'gsxs150', name: 'GSX-S150' },
+            { id: 'gsxs750', name: 'GSX-S750' },
+            { id: 'vstrom650', name: 'V-Strom 650' },
+            { id: 'dr650', name: 'DR650' }
+        ]
+    },
+    {
+        id: 'honda',
+        name: 'HONDA',
+        logo: 'images/honda.png',
+        models: [
+            { id: 'cb190r', name: 'CB190R' },
+            { id: 'cb500x', name: 'CB500X' },
+            { id: 'cb650r', name: 'CB650R' },
+            { id: 'africatwin', name: 'Africa Twin' }
+        ]
+    },
+    {
+        id: 'ktm',
+        name: 'KTM',
+        logo: 'images/ktm.png',
+        models: [
+            { id: 'duke200', name: 'Duke 200' },
+            { id: 'duke390', name: 'Duke 390' },
+            { id: 'rc390', name: 'RC 390' },
+            { id: 'adv390', name: '390 Adventure' }
+        ]
+    },
+    {
+        id: 'bmw',
+        name: 'BMW',
+        logo: 'images/bmw.jpg',
+        models: [
+            { id: 'g310r', name: 'G310R' },
+            { id: 'f850gs', name: 'F850GS' },
+            { id: 'r1250gs', name: 'R1250GS' },
+            { id: 's1000rr', name: 'S1000RR' }
+        ]
+    }
+];
+
 // Category information
 const categories = {
     cupulas: { name: 'Cúpulas', icon: '🏍️' },

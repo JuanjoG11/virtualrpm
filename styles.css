@@ -1,12 +1,20 @@
 :root {
     /* Colors */
-    --color-black: #000000;
+    --color-black: #000510;
+    /* Deep Midnight Blue */
     --color-white: #FFFFFF;
-    --color-gray-dark: #1a1a1a;
-    --color-gray-medium: #2a2a2a;
-    --color-gray-light: #3a3a3a;
-    --color-accent: #ff0000;
-    --color-accent-glow: rgba(255, 0, 0, 0.3);
+    --color-gray-dark: #0a1128;
+    --color-gray-medium: #111d4a;
+    --color-gray-light: #1c2b5e;
+    --color-accent: #007bff;
+    /* Insignia Blue */
+    --color-accent-glow: rgba(0, 123, 255, 0.4);
+    --color-accent-dark: #0056b3;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-blur: 12px;
 
     /* Typography */
     --font-primary: 'Orbitron', sans-serif;
@@ -57,7 +65,7 @@ body {
 
 /* Announcement Bar */
 .announcement-bar {
-    background: linear-gradient(135deg, var(--color-accent) 0%, #cc0000 100%);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
     color: var(--color-white);
     padding: 0.4rem 0;
     text-align: center;
@@ -167,7 +175,7 @@ body {
     width: auto;
     display: block;
     mix-blend-mode: screen;
-    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
+    filter: drop-shadow(0 0 15px rgba(0, 123, 255, 0.6));
     animation: floatingLogo 4s ease-in-out infinite;
 }
 
@@ -339,9 +347,9 @@ body {
 }
 
 .hero-logo {
-    width: 200px;
+    width: 220px;
     height: auto;
-    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.3)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.2));
+    filter: drop-shadow(0 0 30px rgba(0, 123, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
     background: transparent;
     mix-blend-mode: screen;
 }
@@ -632,9 +640,155 @@ section {
     border-top: none;
 }
 
-/* Products Section */
-.products {
+/* Brand Selector Section Styles */
+.brand-selector-section {
     background: var(--color-black);
+    padding-bottom: var(--spacing-lg);
+}
+
+.brands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.brand-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brand-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    background: rgba(0, 123, 255, 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+}
+
+.brand-card.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+}
+
+.brand-logo-container {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 50%;
+    padding: 12px;
+    transition: var(--transition-medium);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.brand-card:hover .brand-logo-container {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+}
+
+.brand-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.brand-name {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    color: var(--color-white);
+}
+
+.brand-card.active .brand-name {
+    color: var(--color-white);
+}
+
+.model-selection-area {
+    background: var(--glass-bg);
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid var(--glass-border);
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.selection-subtitle {
+    font-family: var(--font-primary);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--color-accent);
+}
+
+.models-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.model-btn {
+    background: transparent;
+    border: 2px solid var(--color-accent);
+    color: var(--color-white);
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.model-btn:hover {
+    background: var(--color-accent-glow);
+    transform: translateY(-2px);
+}
+
+.model-btn.active {
+    background: var(--color-accent);
+    color: var(--color-white);
+    box-shadow: 0 0 15px var(--color-accent-glow);
+}
+
+/* Fallback for empty results */
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: var(--glass-bg);
+    border-radius: 12px;
+    border: 2px dashed var(--glass-border);
+}
+
+.no-products p {
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    font-weight: 600;
 }
 
 .products-grid {

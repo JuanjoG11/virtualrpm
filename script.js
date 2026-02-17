@@ -63,15 +63,15 @@ galleryItems.forEach((item, index) => {
 
     // Create gradient background based on category
     const gradients = [
-        'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-        'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-        'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-        'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
-        'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-        'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
-        'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+        'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
+        'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)',
+        'linear-gradient(135deg, #48cae4 0%, #0096c7 100%)',
+        'linear-gradient(135deg, #90e0ef 0%, #00b4d8 100%)',
+        'linear-gradient(135deg, #ade8f4 0%, #48cae4 100%)',
+        'linear-gradient(135deg, #caf0f8 0%, #90e0ef 100%)',
+        'linear-gradient(135deg, #03045e 0%, #023e8a 100%)',
+        'linear-gradient(135deg, #003049 0%, #0077b6 100%)',
+        'linear-gradient(135deg, #023e8a 0%, #0077b6 100%)'
     ];
 
     galleryItem.innerHTML = `
@@ -176,14 +176,117 @@ document.querySelectorAll('.product-card').forEach(card => {
     });
 });
 
-// Product Catalog Rendering
-function renderProducts(category = 'all') {
+// Initialize Brand Selector
+function initBrandSelector() {
+    const brandsGrid = document.getElementById('brandsGrid');
+    if (!brandsGrid) return;
+
+    brandsGrid.innerHTML = motorcycles.map(brand => `
+        <div class="brand-card" data-brand-id="${brand.id}">
+            <div class="brand-logo-container">
+                <img src="${brand.logo}" alt="${brand.name}" class="brand-logo" onerror="this.parentElement.innerHTML='<span style=\'font-weight:bold;color:#007bff;font-size:1.2rem\'>${brand.name.charAt(0)}</span>';">
+            </div>
+            <span class="brand-name">${brand.name}</span>
+        </div>
+    `).join('');
+
+    // Brand click events
+    brandsGrid.querySelectorAll('.brand-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const brandId = card.dataset.brandId;
+            selectBrand(brandId, card);
+        });
+    });
+}
+
+let selectedBrand = null;
+let selectedModel = null;
+
+function selectBrand(brandId, cardElement) {
+    // UI Update
+    document.querySelectorAll('.brand-card').forEach(c => c.classList.remove('active'));
+    cardElement.classList.add('active');
+
+    selectedBrand = motorcycles.find(b => b.id === brandId);
+    selectedModel = null; // Reset model on brand change
+
+    // Show models area
+    const modelArea = document.getElementById('modelSelectionArea');
+    const modelsList = document.getElementById('modelsList');
+
+    modelArea.style.display = 'block';
+    modelsList.innerHTML = selectedBrand.models.map(model => `
+        <button class="model-btn" data-model-id="${model.id}">${model.name}</button>
+    `).join('');
+
+    // Model click events
+    modelsList.querySelectorAll('.model-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            selectModel(btn.dataset.modelId, btn);
+        });
+    });
+
+    // Initial filter by brand
+    renderProducts('all', brandId);
+
+    // Smooth scroll to models
+    setTimeout(() => {
+        modelArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+}
+
+function selectModel(modelId, btnElement) {
+    document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    selectedModel = modelId;
+
+    // Filter by brand AND model
+    renderProducts('all', selectedBrand.id, modelId);
+
+    // Scroll to products
+    setTimeout(() => {
+        const productsSection = document.getElementById('productos');
+        productsSection.scrollIntoView({ behavior: 'smooth' });
+    }, 300);
+}
+
+// Updated Product Catalog Rendering with Brand/Model Filtering
+function renderProducts(category = 'all', brandId = null, modelId = null) {
     const catalogGrid = document.getElementById('catalogGrid');
     if (!catalogGrid) return;
 
-    const filteredProducts = category === 'all'
-        ? products
-        : products.filter(p => p.category === category);
+    let filteredProducts = products;
+
+    // Filter by category if not 'all'
+    if (category !== 'all') {
+        filteredProducts = filteredProducts.filter(p => p.category === category);
+    }
+
+    // Filter by brand/model if provided
+    if (brandId) {
+        filteredProducts = filteredProducts.filter(p => {
+            if (!p.compatible_brands) return true; // Generic products show for everyone
+            return p.compatible_brands.includes(brandId);
+        });
+    }
+
+    if (modelId) {
+        filteredProducts = filteredProducts.filter(p => {
+            if (!p.compatible_models) return true; // Generic products show for everyone
+            return p.compatible_models.includes(modelId);
+        });
+    }
+
+    if (filteredProducts.length === 0) {
+        catalogGrid.innerHTML = `
+            <div class="no-products">
+                <p>No encontramos productos específicos para esta selección, pero estos podrían interesarte:</p>
+            </div>
+        `;
+        // Fallback to show all products or category products
+        filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+    }
 
     catalogGrid.innerHTML = filteredProducts.map(product => `
         <div class="product-card-shop" data-category="${product.category}">
@@ -271,6 +374,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Setup category card filters
     setupCategoryCardFilters();
+
+    // Initialize Brand Selector
+    initBrandSelector();
 });
 
 // Category Card Filter Functionality
@@ -339,9 +445,13 @@ function showCategoryProducts(category) {
 
     console.log('Grid display set to grid');
 
+    // Filter using current brand/model if they exist
+    const brandId = selectedBrand ? selectedBrand.id : null;
+    const modelId = selectedModel ? selectedModel : null;
+
     // Slight delay before rendering for smoother feel
     setTimeout(() => {
-        renderProducts(category);
+        renderProducts(category, brandId, modelId);
         catalogGrid.style.opacity = '1';
         catalogGrid.style.transform = 'translateY(0)';
         console.log('Products rendered and animated');
