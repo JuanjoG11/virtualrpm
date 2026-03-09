@@ -1,3 +1,22 @@
+// Image path helper - converts short path to full Supabase URL
+function getImageUrl(path) {
+    if (!path) return 'https://via.placeholder.com/500?text=Sin+Imagen';
+    if (path.startsWith('http') || path.startsWith('images/')) return path;
+    return (typeof SUPABASE_URL !== 'undefined' ? SUPABASE_URL : '') + path;
+}
+
+// Auto-generate images array from a folder + number of photos
+// Usage: buildImageList('mt15/cupula-sport', 5) 
+// Returns: ['mt15/cupula-sport/1.jpg', 'mt15/cupula-sport/2.jpg', ...]
+function buildImageList(folder, count, ext = 'jpg') {
+    return Array.from({ length: count }, (_, i) => `${folder}/${i + 1}.${ext}`);
+}
+
+// Get the first image of a folder (used as the main/thumbnail image)
+function mainImage(folder, ext = 'jpg') {
+    return `${folder}/1.${ext}`;
+}
+
 // Navigation
 const navbar = document.getElementById('navbar');
 const navToggle = document.getElementById('navToggle');
@@ -241,12 +260,74 @@ function selectModel(modelId, btnElement) {
 
     selectedModel = modelId;
 
-    // Filter by brand AND model
-    renderProducts('all', selectedBrand.id, modelId);
+    const modelName = btnElement.textContent;
+    const brandName = selectedBrand.name;
 
-    // Scroll to products
+    // Show the catalog grid directly (skip category cards step)
+    const catalogGrid = document.getElementById('catalogGrid');
+    const productsSection = document.getElementById('productos');
+    const categoryCards = document.querySelector('.products-grid');
+
+    if (catalogGrid) {
+        // Hide category cards, show products directly
+        if (categoryCards) {
+            categoryCards.style.transition = 'all 0.4s ease';
+            categoryCards.style.opacity = '0';
+            categoryCards.style.transform = 'translateY(-20px)';
+            setTimeout(() => { categoryCards.style.display = 'none'; }, 400);
+        }
+
+        // Update section header to show selected model
+        const sectionHeader = productsSection.querySelector('.section-header');
+        if (sectionHeader) {
+            sectionHeader.innerHTML = `
+                <h2 class="section-title">ACCESORIOS ${brandName} ${modelName}</h2>
+                <div class="title-underline"></div>
+                <p class="section-description">Productos compatibles con tu moto</p>
+                <button id="backToCategoriesBtn" style="
+                    margin-top:1rem; background:transparent; border:1px solid var(--color-accent);
+                    color:var(--color-accent); padding:0.5rem 1.5rem; border-radius:30px;
+                    cursor:pointer; font-family:var(--font-primary); font-size:0.85rem;
+                    transition:all 0.3s ease;
+                " onmouseover="this.style.background='var(--color-accent)';this.style.color='#fff'"
+                   onmouseout="this.style.background='transparent';this.style.color='var(--color-accent)'">
+                    ← Ver todas las categorías
+                </button>
+            `;
+            // Back button logic
+            document.getElementById('backToCategoriesBtn').addEventListener('click', () => {
+                selectedModel = null;
+                if (categoryCards) {
+                    categoryCards.style.display = 'grid';
+                    setTimeout(() => {
+                        categoryCards.style.opacity = '1';
+                        categoryCards.style.transform = 'translateY(0)';
+                    }, 10);
+                }
+                catalogGrid.style.display = 'none';
+                sectionHeader.innerHTML = `
+                    <h2 class="section-title">NUESTRO CATÁLOGO</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-description">Productos exclusivos para la mejor versión de tu moto</p>
+                `;
+            });
+        }
+
+        // Animate and show products
+        catalogGrid.style.display = 'grid';
+        catalogGrid.style.opacity = '0';
+        catalogGrid.style.transform = 'translateY(20px)';
+        catalogGrid.style.transition = 'all 0.5s ease';
+
+        setTimeout(() => {
+            renderProducts('all', selectedBrand.id, modelId);
+            catalogGrid.style.opacity = '1';
+            catalogGrid.style.transform = 'translateY(0)';
+        }, 100);
+    }
+
+    // Scroll to products section
     setTimeout(() => {
-        const productsSection = document.getElementById('productos');
         productsSection.scrollIntoView({ behavior: 'smooth' });
     }, 300);
 }
@@ -263,38 +344,60 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
         filteredProducts = filteredProducts.filter(p => p.category === category);
     }
 
-    // Filter by brand/model if provided
+    // Filter by brand
     if (brandId) {
         filteredProducts = filteredProducts.filter(p => {
-            if (!p.compatible_brands) return true; // Generic products show for everyone
+            if (!p.compatible_brands) return !modelId;
             return p.compatible_brands.includes(brandId);
         });
     }
 
+    // Filter by model — strict: only show products for this model
     if (modelId) {
         filteredProducts = filteredProducts.filter(p => {
-            if (!p.compatible_models) return true; // Generic products show for everyone
+            if (!p.compatible_models) return false;
             return p.compatible_models.includes(modelId);
         });
     }
 
     if (filteredProducts.length === 0) {
+        const modelLabel = modelId ? modelId.toUpperCase() : '';
         catalogGrid.innerHTML = `
-            <div class="no-products">
-                <p>No encontramos productos específicos para esta selección, pero estos podrían interesarte:</p>
+            <div class="no-products" style="grid-column:1/-1; text-align:center; padding:4rem 2rem;">
+                <div style="font-size:4rem; margin-bottom:1rem">🏍️</div>
+                <h3 style="font-family:var(--font-primary); color:var(--color-accent); margin-bottom:1rem;">
+                    Próximamente más productos para ${modelLabel}
+                </h3>
+                <p style="opacity:0.7; margin-bottom:2rem;">Estamos cargando el catálogo para tu moto. Contáctanos para más info.</p>
+                <a href="https://wa.me/573148152431" target="_blank" style="
+                    background:var(--color-accent); color:white; padding:1rem 2rem;
+                    border-radius:8px; text-decoration:none; font-weight:700;
+                    font-family:var(--font-primary);">
+                    PREGUNTAR POR WHATSAPP
+                </a>
             </div>
         `;
-        // Fallback to show all products or category products
-        filteredProducts = category === 'all' ? products : products.filter(p => p.category === category);
+        return;
     }
 
     catalogGrid.innerHTML = filteredProducts.map(product => `
         <div class="product-card-shop" data-category="${product.category}">
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <img src="${getImageUrl(product.image)}" alt="${product.name}" class="product-image" id="catalog-img-${product.id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500?text=Cargando...';">
             ${product.featured ? '<span class="product-badge">DESTACADO</span>' : ''}
             <div class="product-info">
                 <div class="product-category">${categories[product.category].name}</div>
                 <h3 class="product-name">${product.name}</h3>
+                <div class="product-meta" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+                    ${product.colors && product.colors.length > 0 ? `
+                        <div class="product-colors-preview" style="display:flex; gap:4px;">
+                            ${product.colors.slice(0, 5).map(c => `
+                                <span class="bg-${c.toLowerCase().replace(/\s+/g, '-')}" style="width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,0.2);" title="${c}"></span>
+                            `).join('')}
+                            ${product.colors.length > 5 ? `<span style="font-size:0.7rem; opacity:0.6;">+${product.colors.length - 5}</span>` : ''}
+                        </div>
+                    ` : '<span></span>'}
+                    ${product.compatible_models ? `<span class="product-model-badge" style="font-size:0.7rem; background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; opacity:0.7;">${product.compatible_models[0].toUpperCase()}</span>` : ''}
+                </div>
                 <p class="product-desc">${product.description}</p>
                 <div class="product-footer">
                     <span class="product-price">$${product.price.toLocaleString('es-CO')}</span>
@@ -311,8 +414,26 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
         </div>
     `).join('');
 
+    // Fetch dynamic first image for each product that uses a Supabase folder
+    filteredProducts.forEach(product => {
+        if (product.folder && typeof getImagesFromFolder === 'function') {
+            getImagesFromFolder(product.folder).then(images => {
+                if (images && images.length > 0) {
+                    const imgEl = document.getElementById(`catalog-img-${product.id}`);
+                    if (imgEl) {
+                        imgEl.src = images[0]; // Set the real auto-detected first image
+                    }
+                    product.image = images[0]; // Update object to prevent double fetching elsewhere
+                }
+            }).catch(console.error);
+        }
+    });
+
     // Attach add to cart listeners
     attachAddToCartListeners();
+
+    // Attach card click listeners for modal
+    attachProductClickListeners();
 }
 
 // Category Filter Functionality
@@ -345,6 +466,12 @@ function attachAddToCartListeners() {
             const product = products.find(p => p.id === productId);
 
             if (product && cart) {
+                // If it's the grid button and product has colors, force modal to pick a color
+                if (btn.id !== 'modalAddToCart' && product.colors && product.colors.length > 0) {
+                    openModal(product);
+                    return;
+                }
+
                 cart.addItem(product);
 
                 // Button success feedback
@@ -466,4 +593,188 @@ function showCategoryProducts(category) {
         });
         console.log('Scrolled to catalog - target:', scrollTarget);
     }, 300);
+}
+// Product Details Modal Logic
+const productModal = document.getElementById('productModal');
+const modalClose = document.getElementById('modalClose');
+
+if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+}
+
+// Close modal on outside click
+window.addEventListener('click', (e) => {
+    if (e.target === productModal) {
+        closeModal();
+    }
+});
+
+function openModal(product) {
+    if (!productModal) return;
+
+    const mainImg = document.getElementById('modalMainImage');
+    const thumbGrid = document.getElementById('modalThumbnails');
+    const title = document.getElementById('modalTitle');
+    const price = document.getElementById('modalPrice');
+    const desc = document.getElementById('modalDescription');
+    const cat = document.getElementById('modalCategory');
+    const addToCartBtn = document.getElementById('modalAddToCart');
+    const whatsappBtn = document.getElementById('modalWhatsApp');
+
+    // Fill text data
+    title.textContent = product.name;
+    price.textContent = `$${product.price.toLocaleString('es-CO')}`;
+    desc.textContent = product.description;
+    cat.textContent = categories[product.category]?.name || product.category;
+
+    // Show modal immediately with loading state
+    mainImg.src = getImageUrl(product.image);
+    thumbGrid.innerHTML = '<p style="opacity:0.5;font-size:0.9rem">Cargando fotos...</p>';
+
+    // Show modal right away
+    productModal.style.display = 'flex';
+    setTimeout(() => {
+        productModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }, 10);
+
+    // Load images: auto-detect from Supabase folder OR use static list
+    const loadImages = async () => {
+        let imageUrls = [];
+
+        if (product.folder && typeof getImagesFromFolder === 'function') {
+            // AUTO MODE: Detect ALL files in the Supabase folder (any name!)
+            imageUrls = await getImagesFromFolder(product.folder);
+        }
+
+        // Fallback: use manual list or single image
+        if (imageUrls.length === 0) {
+            const fallback = product.images || [product.image];
+            imageUrls = fallback.map(src => getImageUrl(src));
+        }
+
+        // Set main image to first
+        if (imageUrls.length > 0) {
+            mainImg.src = imageUrls[0];
+        }
+
+        // Render thumbnails
+        thumbGrid.innerHTML = '';
+        imageUrls.forEach((url, index) => {
+            const thumb = document.createElement('div');
+            thumb.className = `thumb-item ${index === 0 ? 'active' : ''}`;
+            thumb.innerHTML = `<img src="${url}" alt="${product.name} ${index + 1}" onerror="this.parentElement.style.display='none'">`;
+
+            thumb.addEventListener('click', () => {
+                mainImg.src = url;
+                document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+            });
+
+            thumbGrid.appendChild(thumb);
+        });
+    };
+
+    loadImages();
+
+    // Handle Colors logic
+    const colorWrapper = document.getElementById('modalColorsWrapper');
+    const colorPillsContainer = document.getElementById('modalColorPills');
+    const colorValueInput = document.getElementById('modalColorValue');
+
+    if (colorWrapper && colorPillsContainer && colorValueInput) {
+        colorValueInput.value = ''; // Reset selection
+
+        if (product.colors && product.colors.length > 0) {
+            colorWrapper.style.display = 'block';
+            colorPillsContainer.innerHTML = product.colors.map(color => {
+                const colorClass = color.toLowerCase().replace(/\s+/g, '-');
+                return `
+                    <div class="color-pill" data-color="${color}">
+                        <span class="color-indicator bg-${colorClass}"></span>
+                        ${color}
+                    </div>
+                `;
+            }).join('');
+
+            // Add click events to pills
+            const pills = colorPillsContainer.querySelectorAll('.color-pill');
+            pills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    pills.forEach(p => p.classList.remove('active'));
+                    pill.classList.add('active');
+                    colorValueInput.value = pill.dataset.color;
+                });
+            });
+        } else {
+            colorWrapper.style.display = 'none';
+            colorPillsContainer.innerHTML = '';
+        }
+    }
+
+    // Update buttons
+    addToCartBtn.onclick = () => {
+        if (cart) {
+            let selectedColor = null;
+            if (product.colors && product.colors.length > 0) {
+                if (colorValueInput && colorValueInput.value) {
+                    selectedColor = colorValueInput.value;
+                } else {
+                    // Visual shake effect for the color container to alert user
+                    colorWrapper.style.animation = 'none';
+                    colorWrapper.offsetHeight; // trigger reflow
+                    colorWrapper.style.animation = 'shake 0.5s ease-in-out';
+
+                    if (!document.getElementById('shake-style')) {
+                        const style = document.createElement('style');
+                        style.id = 'shake-style';
+                        style.textContent = `
+                            @keyframes shake {
+                                0%, 100% { transform: translateX(0); }
+                                25% { transform: translateX(-5px); }
+                                75% { transform: translateX(5px); }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                    return;
+                }
+            }
+            cart.addItem(product, 1, selectedColor);
+            addToCartBtn.textContent = '¡AÑADIDO!';
+            addToCartBtn.style.background = '#28a745';
+            setTimeout(() => {
+                addToCartBtn.textContent = 'AGREGAR AL CARRITO';
+                addToCartBtn.style.background = 'var(--color-accent)';
+            }, 2000);
+        }
+    };
+
+    const whatsappMsg = `Hola! Estoy interesado en el producto: ${product.name} que vi en la web.`;
+    whatsappBtn.href = `https://wa.me/573148152431?text=${encodeURIComponent(whatsappMsg)}`;
+}
+
+function closeModal() {
+    productModal.classList.remove('active');
+    setTimeout(() => {
+        productModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scroll
+    }, 400);
+}
+
+function attachProductClickListeners() {
+    const productCards = document.querySelectorAll('.product-card-shop');
+    productCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+            // Don't open if clicked on "Add to Cart" button or its children
+            if (e.target.closest('.add-to-cart-btn')) return;
+
+            const productId = card.querySelector('.add-to-cart-btn').dataset.productId;
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                openModal(product);
+            }
+        });
+    });
 }

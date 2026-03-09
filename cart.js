@@ -20,33 +20,36 @@ class ShoppingCart {
         this.updateCartUI();
     }
 
-    addItem(product, quantity = 1) {
-        const existingItem = this.items.find(item => item.id === product.id);
+    addItem(product, quantity = 1, selectedColor = null) {
+        const uniqueId = selectedColor ? `${product.id}-${selectedColor}` : product.id;
+        const existingItem = this.items.find(item => (item.uniqueId || item.id) === uniqueId);
 
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
             this.items.push({
                 ...product,
+                uniqueId: uniqueId,
+                selectedColor: selectedColor,
                 quantity: quantity
             });
         }
 
         this.saveCart();
-        this.showNotification(product.name);
+        this.showNotification(product.name + (selectedColor ? ` (${selectedColor})` : ''));
         this.animateCartIcon();
     }
 
-    removeItem(productId) {
-        this.items = this.items.filter(item => item.id !== productId);
+    removeItem(uniqueId) {
+        this.items = this.items.filter(item => (item.uniqueId || item.id) !== uniqueId);
         this.saveCart();
     }
 
-    updateQuantity(productId, quantity) {
-        const item = this.items.find(item => item.id === productId);
+    updateQuantity(uniqueId, quantity) {
+        const item = this.items.find(item => (item.uniqueId || item.id) === uniqueId);
         if (item) {
             if (quantity <= 0) {
-                this.removeItem(productId);
+                this.removeItem(uniqueId);
             } else {
                 item.quantity = quantity;
                 this.saveCart();
@@ -194,18 +197,24 @@ class ShoppingCart {
         if (cartContent) cartContent.style.display = 'block';
 
         cartItemsContainer.innerHTML = this.items.map(item => `
-            <div class="cart-item" data-id="${item.id}">
+            <div class="cart-item" data-id="${item.uniqueId || item.id}">
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                 <div class="cart-item-details">
                     <h4 class="cart-item-name">${item.name}</h4>
+                    ${item.selectedColor ? `
+                        <p class="cart-item-color" style="font-size: 0.85rem; color: var(--color-accent); margin: 4px 0; display: flex; align-items: center; gap: 6px;">
+                            <span class="bg-${item.selectedColor.toLowerCase().replace(/\s+/g, '-')}" style="width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);"></span>
+                            Color: ${item.selectedColor}
+                        </p>
+                    ` : ''}
                     <p class="cart-item-price">$${this.formatPrice(item.price)}</p>
                     <div class="cart-item-quantity">
-                        <button class="qty-btn qty-minus" data-id="${item.id}">-</button>
+                        <button class="qty-btn qty-minus" data-id="${item.uniqueId || item.id}">-</button>
                         <span class="qty-value">${item.quantity}</span>
-                        <button class="qty-btn qty-plus" data-id="${item.id}">+</button>
+                        <button class="qty-btn qty-plus" data-id="${item.uniqueId || item.id}">+</button>
                     </div>
                 </div>
-                <button class="cart-item-remove" data-id="${item.id}">
+                <button class="cart-item-remove" data-id="${item.uniqueId || item.id}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -261,7 +270,7 @@ class ShoppingCart {
         document.querySelectorAll('.qty-plus').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = e.currentTarget.dataset.id;
-                const item = this.items.find(i => i.id === id);
+                const item = this.items.find(i => (i.uniqueId || i.id) === id);
                 if (item) this.updateQuantity(id, item.quantity + 1);
             });
         });
@@ -269,7 +278,7 @@ class ShoppingCart {
         document.querySelectorAll('.qty-minus').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = e.currentTarget.dataset.id;
-                const item = this.items.find(i => i.id === id);
+                const item = this.items.find(i => (i.uniqueId || i.id) === id);
                 if (item) this.updateQuantity(id, item.quantity - 1);
             });
         });
@@ -357,6 +366,9 @@ class ShoppingCart {
 
         this.items.forEach(item => {
             message += `📦 *${item.name}*\n`;
+            if (item.selectedColor) {
+                message += `   Color: ${item.selectedColor}\n`;
+            }
             message += `   Cantidad: ${item.quantity}\n`;
             message += `   Precio: $${this.formatPrice(item.price)}\n`;
             message += `   Subtotal: $${this.formatPrice(item.price * item.quantity)}\n\n`;
