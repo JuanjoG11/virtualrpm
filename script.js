@@ -25,6 +25,10 @@ const navLinks = document.querySelectorAll('.nav-link');
 
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
+    // Mantener la posición debajo del announcement-bar fijo
+    const isMobile = window.innerWidth <= 768;
+    const bannerHeight = isMobile ? 28 : 32;
+    
     if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
@@ -49,14 +53,33 @@ navLinks.forEach(link => {
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+        const href = this.getAttribute('href');
+        
+        // Solo para enlaces internos
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            
+            // Cerrar menú móvil si está abierto
+            if (navMenu && navMenu.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+
+            if (href === '#') return;
+
+            const target = document.querySelector(href);
+            if (target) {
+                const isMobile = window.innerWidth <= 768;
+                // Ajustamos el offset según la altura del banner + navbar (30 + 60 = 90 aprox)
+                const bannerHeight = isMobile ? 30 : 32;
+                const navHeight = 60;
+                const offsetTop = target.offsetTop - (bannerHeight + navHeight);
+
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
         }
     });
 });
@@ -82,15 +105,15 @@ galleryItems.forEach((item, index) => {
 
     // Create gradient background based on category
     const gradients = [
-        'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
-        'linear-gradient(135deg, #00b4d8 0%, #0077b6 100%)',
-        'linear-gradient(135deg, #48cae4 0%, #0096c7 100%)',
-        'linear-gradient(135deg, #90e0ef 0%, #00b4d8 100%)',
-        'linear-gradient(135deg, #ade8f4 0%, #48cae4 100%)',
-        'linear-gradient(135deg, #caf0f8 0%, #90e0ef 100%)',
-        'linear-gradient(135deg, #03045e 0%, #023e8a 100%)',
-        'linear-gradient(135deg, #003049 0%, #0077b6 100%)',
-        'linear-gradient(135deg, #023e8a 0%, #0077b6 100%)'
+        'linear-gradient(135deg, #333 0%, #111 100%)',
+        'linear-gradient(135deg, #555 0%, #222 100%)',
+        'linear-gradient(135deg, #d4d4d8 0%, #8c9094 100%)',
+        'linear-gradient(135deg, #1f1f1f 0%, #050505 100%)',
+        'linear-gradient(135deg, #777 0%, #333 100%)',
+        'linear-gradient(135deg, #eee 0%, #a1a1aa 100%)',
+        'linear-gradient(135deg, #2a2a2a 0%, #0a0a0a 100%)',
+        'linear-gradient(135deg, #a1a1aa 0%, #555 100%)',
+        'linear-gradient(135deg, #121212 0%, #000 100%)'
     ];
 
     galleryItem.innerHTML = `
