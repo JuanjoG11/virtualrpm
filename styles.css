@@ -1257,8 +1257,8 @@ section {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: var(--color-white);
-    color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-black) !important;
     font-family: var(--font-primary);
     font-size: 0.8rem;
     font-weight: 800;
@@ -1444,7 +1444,7 @@ section {
     top: 0;
     right: 0;
     background: var(--color-accent);
-    color: var(--color-black);
+    color: var(--color-black) !important;
     font-family: var(--font-primary);
     font-size: 0.7rem;
     font-weight: 900;
