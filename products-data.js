@@ -519,6 +519,148 @@ const products = [
         compatible_brands: ['yamaha'],
         compatible_models: ['mt15'],
         featured: true
+    },
+    {
+        id: 'mt15-sliders-motor-001',
+        name: 'Sliders de Motor',
+        category: 'protecciones',
+        price: 235000,
+        image: `${SUPABASE_URL}mt15/sliders-motor/1.jpg`,
+        folder: 'mt15/sliders-motor',
+        description: 'Sliders de motor para Yamaha MT-15. Máxima protección para el motor en caso de caída o deslizamiento.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt15'],
+        featured: true
+    },
+    {
+        id: 'mt15-full-system-001',
+        name: 'Full System MT15',
+        category: 'exostos',
+        price: 460000,
+        image: `${SUPABASE_URL}mt15/full-system-cromado/1.jpg`,
+        folder: 'mt15/full-system-cromado',
+        description: 'Sistema completo (Full System) para Yamaha MT-15. Mejora el rendimiento y el sonido. (Nota: Acabado Tornasol $520.000 / Cromado $460.000)',
+        colors: ['Tornasol', 'Cromado'],
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt15'],
+        featured: true
+    },
+
+    // ─── KTM DUKE 200 / 390 NG ──────────────────────────────────────────
+    {
+        id: 'duke-protector-bomba-freno-delantero-001',
+        name: 'Protector Bomba Freno Delantero',
+        category: 'protecciones',
+        price: 35000,
+        image: `${SUPABASE_URL}duke/protector-bomba-freno-delantero/1.jpg`,
+        folder: 'duke/protector-bomba-freno-delantero',
+        description: 'Protector para bomba de freno delantero para KTM Duke 200 y 390 NG. Protege el sistema de frenado y mejora el estilo de la moto.',
+        colors: ['Negro', 'Cromado'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-protector-bomba-freno-trasero-001',
+        name: 'Protector Bomba Freno Trasero',
+        category: 'protecciones',
+        price: 35000,
+        image: `${SUPABASE_URL}duke/protector-bomba-freno-trasero/1.jpg`,
+        folder: 'duke/protector-bomba-freno-trasero',
+        description: 'Protector para bomba de freno trasero para KTM Duke 200 y 390 NG. Mayor seguridad y protección contra impactos.',
+        colors: ['Negro', 'Cromado'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-tapas-laterales-radiador-001',
+        name: 'Lujo Tapa Laterales Radiador',
+        category: 'accesorios',
+        price: 85000,
+        image: `${SUPABASE_URL}duke/lujo-tapas-laterales-radiador/1.jpg`,
+        folder: 'duke/lujo-tapas-laterales-radiador',
+        description: 'Tapas laterales de radiador de lujo para KTM Duke 200 y 390 NG. Añade un toque exclusivo y agresivo al diseño general de la moto.',
+        colors: ['Negro', 'Naranja'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-lujo-posapies-001',
+        name: 'Lujo Posapies',
+        category: 'accesorios',
+        price: 95000,
+        image: `${SUPABASE_URL}duke/lujo-posapies/1.jpg`,
+        folder: 'duke/lujo-posapies',
+        description: 'Posapies de lujo para KTM Duke 200 y 390 NG. Diseño deportivo y acabado premium.',
+        colors: ['Negro', 'Naranja'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-protector-acutrax-001',
+        name: 'Protector Acutrax',
+        category: 'protecciones',
+        price: 35000,
+        image: `${SUPABASE_URL}duke/protector-acutrax/1.jpg`,
+        folder: 'duke/protector-acutrax',
+        description: 'Protector Acutrax para KTM Duke 200 y 390 NG. Brinda estilo y protección adicional.',
+        colors: ['Negro', 'Cromado'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-portaplaca-001',
+        name: 'Portaplaca',
+        category: 'accesorios',
+        price: 35000,
+        image: `${SUPABASE_URL}duke/portaplaca/1.jpg`,
+        folder: 'duke/portaplaca',
+        description: 'Portaplaca resistente y de diseño minimalista para KTM Duke 200 y 390 NG. Ajuste perfecto para placa estándar.',
+        colors: ['Negro', 'Cromado'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-fender-abatible-001',
+        name: 'Fender Eliminator Abatible',
+        category: 'accesorios',
+        price: 115000,
+        image: `${SUPABASE_URL}duke/fender-abatible/1.jpg`,
+        folder: 'duke/fender-abatible',
+        description: 'Fender eliminator abatible deportivo para KTM Duke 200 y 390 NG. Permite inclinar la placa y mejora la estética trasera.',
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-protector-radiador-001',
+        name: 'Protector de Radiador',
+        category: 'protecciones',
+        price: 80000,
+        image: `${SUPABASE_URL}duke/protector-radiador/1.jpg`,
+        folder: 'duke/protector-radiador',
+        description: 'Protector de radiador para KTM Duke 200 y 390 NG. (Nota: Cromado $80.000 / Negro y Naranja $90.000)',
+        colors: ['Cromado', 'Negro', 'Naranja'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-acople-codo-exosto-001',
+        name: 'Acople Codo Exosto',
+        category: 'exostos',
+        price: 150000,
+        image: `${SUPABASE_URL}duke/acople-codo-exosto/1.jpg`,
+        folder: 'duke/acople-codo-exosto',
+        description: 'Acople codo de exosto exclusivo para KTM Duke 390 NG. Optimiza el flujo y sonido.',
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke390'],
+        featured: true
     }
 ];
 
