@@ -661,6 +661,42 @@ const products = [
         compatible_brands: ['ktm'],
         compatible_models: ['duke390'],
         featured: true
+    },
+    {
+        id: 'duke-slider-motor-001',
+        name: 'Slider de Motor',
+        category: 'protecciones',
+        price: 200000,
+        image: `${SUPABASE_URL}duke/slider-motor/1.jpg`,
+        folder: 'duke/slider-motor',
+        description: 'Sliders de motor de alta resistencia para KTM Duke 200 y 390 NG. Brindan protección superior al chasis y motor ante caídas.',
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-slider-eje-001',
+        name: 'Slider de Eje KTM (Par)',
+        category: 'protecciones',
+        price: 65000,
+        image: `${SUPABASE_URL}duke/slider-eje/1.jpg`,
+        folder: 'duke/slider-eje',
+        description: 'Par de sliders de eje para KTM Duke. Protegen las barras y el basculante en caso de caída o arrastre.',
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
+    },
+    {
+        id: 'duke-slider-eje-srp-001',
+        name: 'Slider de Eje SRP KTM',
+        category: 'protecciones',
+        price: 55000,
+        image: `${SUPABASE_URL}duke/slider-eje-srp/1.jpg`,
+        folder: 'duke/slider-eje-srp',
+        description: 'Slider de eje marca SRP para KTM Duke. Diseño aerodinámico y alta resistencia para protección en caídas.',
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390'],
+        featured: true
     }
 ];
 
