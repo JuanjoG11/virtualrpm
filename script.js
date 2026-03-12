@@ -395,7 +395,7 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
                     Próximamente más productos para ${modelLabel}
                 </h3>
                 <p style="opacity:0.7; margin-bottom:2rem;">Estamos cargando el catálogo para tu moto. Contáctanos para más info.</p>
-                <a href="https://wa.me/573148152431" target="_blank" style="
+                <a href="https://wa.me/573128378782" target="_blank" style="
                     background:var(--color-accent); color:white; padding:1rem 2rem;
                     border-radius:8px; text-decoration:none; font-weight:700;
                     font-family:var(--font-primary);">
@@ -408,7 +408,10 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
 
     catalogGrid.innerHTML = filteredProducts.map(product => `
         <div class="product-card-shop" data-category="${product.category}">
-            <img src="${getImageUrl(product.image)}" alt="${product.name}" class="product-image" id="catalog-img-${product.id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500?text=Cargando...';">
+            <div class="product-image-wrapper">
+                <div class="product-image-blur" style="background-image: url('${getImageUrl(product.image)}')"></div>
+                <img src="${getImageUrl(product.image)}" alt="${product.name}" class="product-image" id="catalog-img-${product.id}" onerror="this.onerror=null; this.src='https://via.placeholder.com/500?text=Cargando...';">
+            </div>
             ${product.featured ? '<span class="product-badge">DESTACADO</span>' : ''}
             <div class="product-info">
                 <div class="product-category">${categories[product.category].name}</div>
@@ -777,7 +780,7 @@ function openModal(product) {
     };
 
     const whatsappMsg = `Hola! Estoy interesado en el producto: ${product.name} que vi en la web.`;
-    whatsappBtn.href = `https://wa.me/573148152431?text=${encodeURIComponent(whatsappMsg)}`;
+    whatsappBtn.href = `https://wa.me/573128378782?text=${encodeURIComponent(whatsappMsg)}`;
 }
 
 function closeModal() {
