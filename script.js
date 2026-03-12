@@ -371,15 +371,18 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
     if (brandId) {
         filteredProducts = filteredProducts.filter(p => {
             if (!p.compatible_brands) return !modelId;
-            return p.compatible_brands.includes(brandId);
+            return p.compatible_brands.includes(brandId) || p.compatible_brands.includes('universal');
         });
     }
 
     // Filter by model — strict: only show products for this model
     if (modelId) {
         filteredProducts = filteredProducts.filter(p => {
+            // Si el modelo está explícitamente excluido, no lo mostramos
+            if (p.excluded_models && p.excluded_models.includes(modelId)) return false;
+
             if (!p.compatible_models) return false;
-            return p.compatible_models.includes(modelId);
+            return p.compatible_models.includes(modelId) || p.compatible_models.includes('universal');
         });
     }
 

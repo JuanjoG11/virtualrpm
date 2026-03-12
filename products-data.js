@@ -221,39 +221,118 @@ const products = [
 
     // ─── UNIVERSALES ─────────────────────────────────────────────────────
     {
-        id: 'mt15-guardabarro-001',
-        name: 'Guardabarro Monobrazo Universal MT-15',
+        id: 'uni-guardabarro-001',
+        name: 'Guardabarro Monobrazo Universal',
         category: 'accesorios',
         price: 120000,
         image: `${SUPABASE_URL}mt15/guardabarro-monobrazo/1.jpg`,
         folder: 'mt15/guardabarro-monobrazo',
-        description: 'Guardabarro monobrazo de alta resistencia para Yamaha MT-15. Instalación sencilla sin modificaciones.',
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
+        description: 'Guardabarro monobrazo de alta resistencia. Instalación sencilla sin modificaciones. Diseño universal compatible con múltiples modelos.',
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
         featured: true
     },
     {
-        id: 'mt15-guardabarro-lujo-001',
+        id: 'uni-guardabarro-lujo-001',
         name: 'Guardabarro Monobrazo de Lujo Universal',
         category: 'accesorios',
         price: 140000,
         image: `${SUPABASE_URL}mt15/guardabarro-monobrazo-lujo/1.jpg`,
         folder: 'mt15/guardabarro-monobrazo-lujo',
-        description: 'Guardabarro monobrazo diseño de lujo para Yamaha MT-15. Acabados premium y máxima protección.',
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
+        description: 'Guardabarro monobrazo diseño de lujo. Acabados premium y máxima protección. Diseño universal compatible con múltiples modelos.',
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
         featured: true
     },
     {
-        id: 'mt15-guardabarro-carbono-001',
+        id: 'uni-guardabarro-carbono-001',
         name: 'Guardabarro Monobrazo Carbono Grande',
         category: 'accesorios',
         price: 145000,
         image: `${SUPABASE_URL}mt15/guardabarro-monobrazo-carbono/1.jpg`,
         folder: 'mt15/guardabarro-monobrazo-carbono',
-        description: 'Guardabarro monobrazo versión grande con acabado tipo carbono para Yamaha MT-15. Estilo deportivo y protección extendida.',
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
+        description: 'Guardabarro monobrazo versión grande con acabado tipo carbono. Estilo deportivo y protección extendida. Compatible con múltiples modelos.',
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-corta-vientos-lujo-001',
+        name: 'Corta Vientos de Lujo',
+        category: 'accesorios',
+        price: 90000,
+        image: `${SUPABASE_URL}mt15/corta-vientos-lujo/1.jpg`,
+        folder: 'mt15/corta-vientos-lujo',
+        description: 'Corta vientos de lujo para manubrio. Protegen las manos y maniguetas con un diseño aerodinámico y premium. Universal para varios modelos.',
+        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-hand-saver-cuadrado-001',
+        name: 'Hand Saver Cuadrado',
+        category: 'accesorios',
+        price: 90000,
+        image: `${SUPABASE_URL}mt15/hand-saver-cuadrado/1.jpg`,
+        folder: 'mt15/hand-saver-cuadrado',
+        description: 'Hand saver de diseño cuadrado. Máxima protección para tus manos y maniguetas con una apariencia robusta. Compatibilidad universal.',
+        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-hand-saver-edition-001',
+        name: 'Hand Saver Edition',
+        category: 'accesorios',
+        price: 115000,
+        image: `${SUPABASE_URL}mt15/hand-saver-edition/1.jpg`,
+        folder: 'mt15/hand-saver-edition',
+        description: 'Hand Saver Edition premium. Acabados y diseño superior para los pilotos más exigentes. Compatibilidad universal para múltiples referencias.',
+        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-hand-saver-3d-carbono-001',
+        name: 'Hand Saver 3D Carbono',
+        category: 'accesorios',
+        price: 90000,
+        image: `${SUPABASE_URL}mt15/hand-saver-3d-carbono/1.jpg`,
+        folder: 'mt15/hand-saver-3d-carbono',
+        description: 'Hand saver con acabado 3D tipo carbono. Estilo racing y protección para el piloto. Diseño universal adaptable.',
+        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-grips-barracuda-001',
+        name: 'Grips Barracuda Aluminio',
+        category: 'accesorios',
+        price: 45000,
+        image: `${SUPABASE_URL}universales/grips-barracuda/1.jpg`,
+        folder: 'universales/grips-barracuda',
+        description: 'Grips marca Barracuda fabricados en aluminio de alta calidad. Mejoran el agarre y la estética del manubrio. Compatibilidad universal para todas las motos.',
+        colors: ['Azul', 'Rojo', 'Negro', 'Naranja', 'Verde', 'Plateado', 'Titanio', 'Morado', 'Tornasol', 'Dorado'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
+    },
+    {
+        id: 'uni-spools-001',
+        name: 'Spools',
+        category: 'protecciones',
+        price: 55000,
+        image: `${SUPABASE_URL}universales/spools/1.jpg`,
+        folder: 'universales/spools',
+        description: 'Spools protectores y funcionales para soporte de caballete trasero. Fabricados en aluminio CNC de alta calidad. Disponibles en varios colores.',
+        colors: ['Rojo', 'Verde', 'Azul', 'Naranja', 'Plata', 'Negro', 'Dorado'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        excluded_models: ['ns200', 'dominar400'], // Excluidos NS y Dominar
         featured: true
     },
     {
@@ -468,58 +547,7 @@ const products = [
         compatible_models: ['mt15'],
         featured: true
     },
-    {
-        id: 'mt15-corta-vientos-lujo-001',
-        name: 'Corta Vientos de Lujo',
-        category: 'accesorios',
-        price: 90000,
-        image: `${SUPABASE_URL}mt15/corta-vientos-lujo/1.jpg`,
-        folder: 'mt15/corta-vientos-lujo',
-        description: 'Corta vientos de lujo para manubrio de Yamaha MT-15. Protegen las manos y maniguetas con un diseño aerodinámico y premium.',
-        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
-        featured: true
-    },
-    {
-        id: 'mt15-hand-saver-cuadrado-001',
-        name: 'Hand Saver Cuadrado',
-        category: 'accesorios',
-        price: 90000,
-        image: `${SUPABASE_URL}mt15/hand-saver-cuadrado/1.jpg`,
-        folder: 'mt15/hand-saver-cuadrado',
-        description: 'Hand saver de diseño cuadrado para Yamaha MT-15. Máxima protección para tus manos y maniguetas con una apariencia robusta.',
-        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
-        featured: true
-    },
-    {
-        id: 'mt15-hand-saver-edition-001',
-        name: 'Hand Saver Edition',
-        category: 'accesorios',
-        price: 115000,
-        image: `${SUPABASE_URL}mt15/hand-saver-edition/1.jpg`,
-        folder: 'mt15/hand-saver-edition',
-        description: 'Hand Saver Edition premium para Yamaha MT-15. Acabados y diseño superior para los pilotos más exigentes.',
-        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
-        featured: true
-    },
-    {
-        id: 'mt15-hand-saver-3d-carbono-001',
-        name: 'Hand Saver 3D Carbono',
-        category: 'accesorios',
-        price: 90000,
-        image: `${SUPABASE_URL}mt15/hand-saver-3d-carbono/1.jpg`,
-        folder: 'mt15/hand-saver-3d-carbono',
-        description: 'Hand saver con acabado 3D tipo carbono para Yamaha MT-15. Estilo racing y protección para el piloto.',
-        colors: ['Negro', 'Plata', 'Gris Titanio', 'Rojo', 'Azul', 'Verde', 'Naranja', 'Dorado', 'Tornasol'],
-        compatible_brands: ['yamaha'],
-        compatible_models: ['mt15'],
-        featured: true
-    },
+
     {
         id: 'mt15-sliders-motor-001',
         name: 'Sliders de Motor',
@@ -547,6 +575,19 @@ const products = [
     },
 
     // ─── KTM DUKE 200 / 390 NG ──────────────────────────────────────────
+    {
+        id: 'ktm-aro-tapa-001',
+        name: 'Aro Tapa Tanque KTM',
+        category: 'accesorios',
+        price: 30000,
+        image: `${SUPABASE_URL}duke/aro-tapa-tanque/1.jpg`,
+        folder: 'duke/aro-tapa-tanque',
+        description: 'Aro decorativo para tapa de tanque KTM. Disponible en Negro, Plateado y Naranja. Instalación sencilla y ajuste perfecto.',
+        colors: ['Negro', 'Plateado', 'Naranja'],
+        compatible_brands: ['ktm'],
+        compatible_models: ['duke200', 'duke390', 'rc390', 'adv390'],
+        featured: true
+    },
     {
         id: 'duke-protector-bomba-freno-delantero-001',
         name: 'Protector Bomba Freno Delantero',
@@ -697,6 +738,70 @@ const products = [
         compatible_brands: ['ktm'],
         compatible_models: ['duke200', 'duke390'],
         featured: true
+    },
+    // ─── SUZUKI GIXXER 150 / 250 ───────────────────────────────────────
+    {
+        id: 'suzuki-aro-tapa-001',
+        name: 'Aro Tapa Tanque Gixxer',
+        category: 'accesorios',
+        price: 30000,
+        image: `${SUPABASE_URL}suzuki/aro-tapa-tanque/1.jpg`,
+        folder: 'suzuki/aro-tapa-tanque',
+        description: 'Aro decorativo para tapa de tanque Suzuki Gixxer. Disponible en Negro y Plateado. Ajuste perfecto para modelos 150 y 250.',
+        colors: ['Negro', 'Plateado'],
+        compatible_brands: ['suzuki'],
+        compatible_models: ['gixxer150', 'gixxer250'],
+        featured: true
+    },
+    {
+        id: 'suzuki-protector-radiador-001',
+        name: 'Protector de Radiador Gixxer 250',
+        category: 'protecciones',
+        price: 85000,
+        image: `${SUPABASE_URL}suzuki/protector-radiador-gixxer250/1.jpg`,
+        folder: 'suzuki/protector-radiador-gixxer250',
+        description: 'Protector de radiador de alta resistencia para Suzuki Gixxer 250. Evita daños por impactos y mejora la estética.',
+        colors: ['Negro', 'Plata'],
+        compatible_brands: ['suzuki'],
+        compatible_models: ['gixxer250'],
+        featured: true
+    },
+    {
+        id: 'suzuki-pechera-001',
+        name: 'Quilla o Pechera Metálica para Gixxer',
+        category: 'protecciones',
+        price: 170000,
+        image: `${SUPABASE_URL}suzuki/pechera-metalica/1.jpg`,
+        folder: 'suzuki/pechera-metalica',
+        description: 'Quilla o pechera metálica reforzada para Suzuki Gixxer. Proporciona protección adicional al motor y mejora la estética de la moto.',
+        compatible_brands: ['suzuki'],
+        compatible_models: ['gixxer150', 'gixxer250'],
+        featured: true
+    },
+    {
+        id: 'suzuki-slider-motor-001',
+        name: 'Slider de Motor Gixxer 250 Naked',
+        category: 'protecciones',
+        price: 200000,
+        image: `${SUPABASE_URL}suzuki/slider-motor-gixxer250/1.jpg`,
+        folder: 'suzuki/slider-motor-gixxer250',
+        description: 'Slider de motor de alta resistencia diseñado específicamente para Suzuki Gixxer 250 Naked. Brinda protección superior al chasis y motor ante caídas.',
+        compatible_brands: ['suzuki'],
+        compatible_models: ['gixxer250'],
+        featured: true
+    },
+    {
+        id: 'suzuki-agarradera-tanque-001',
+        name: 'Agarradera de Tanque Suzuki',
+        category: 'accesorios',
+        price: 190000,
+        image: `${SUPABASE_URL}suzuki/agarradera-tanque/1.jpg`,
+        folder: 'suzuki/agarradera-tanque',
+        description: 'Agarradera de tanque deportiva para Suzuki. Facilita el agarre del pasajero y da un look deportivo. Compatible con modelos Gixxer 150 y 250.',
+        colors: ['Negro', 'Azul', 'Titanio'],
+        compatible_brands: ['suzuki'],
+        compatible_models: ['gixxer150', 'gixxer250'],
+        featured: true
     }
 ];
 
@@ -736,7 +841,9 @@ const motorcycles = [
             { id: 'gsxs150', name: 'GSX-S150' },
             { id: 'gsxs750', name: 'GSX-S750' },
             { id: 'vstrom650', name: 'V-Strom 650' },
-            { id: 'dr650', name: 'DR650' }
+            { id: 'dr650', name: 'DR650' },
+            { id: 'gixxer150', name: 'GIXXER 150' },
+            { id: 'gixxer250', name: 'GIXXER 250' }
         ]
     },
     {
@@ -770,6 +877,15 @@ const motorcycles = [
             { id: 'f850gs', name: 'F850GS' },
             { id: 'r1250gs', name: 'R1250GS' },
             { id: 's1000rr', name: 'S1000RR' }
+        ]
+    },
+    {
+        id: 'bajaj',
+        name: 'BAJAJ',
+        logo: 'images/bajaj.png',
+        models: [
+            { id: 'ns200', name: 'NS 200' },
+            { id: 'dominar400', name: 'Dominar 400' }
         ]
     }
 ];
