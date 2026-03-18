@@ -419,9 +419,10 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
                 <div class="product-meta" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
                     ${product.colors && product.colors.length > 0 ? `
                         <div class="product-colors-preview" style="display:flex; gap:4px;">
-                            ${product.colors.slice(0, 5).map(c => `
-                                <span class="bg-${c.toLowerCase().replace(/\s+/g, '-')}" style="width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,0.2);" title="${c}"></span>
-                            `).join('')}
+                            ${product.colors.slice(0, 5).map(c => {
+                                const colorName = typeof c === 'object' ? c.name : c;
+                                return `<span class="bg-${colorName.toLowerCase().replace(/\s+/g, '-')}" style="width:10px; height:10px; border-radius:50%; border:1px solid rgba(255,255,255,0.2);" title="${colorName}"></span>`;
+                            }).join('')}
                             ${product.colors.length > 5 ? `<span style="font-size:0.7rem; opacity:0.6;">+${product.colors.length - 5}</span>` : ''}
                         </div>
                     ` : '<span></span>'}
@@ -716,12 +717,16 @@ function openModal(product) {
 
         if (product.colors && product.colors.length > 0) {
             colorWrapper.style.display = 'block';
-            colorPillsContainer.innerHTML = product.colors.map(color => {
-                const colorClass = color.toLowerCase().replace(/\s+/g, '-');
+            colorPillsContainer.innerHTML = product.colors.map((color, idx) => {
+                const colorName = typeof color === 'object' ? color.name : color;
+                const colorClass = colorName.toLowerCase().replace(/\s+/g, '-');
+                const hasCustomPrice = typeof color === 'object' && color.price;
+                
                 return `
-                    <div class="color-pill" data-color="${color}">
+                    <div class="color-pill" data-color-idx="${idx}" data-color="${colorName}">
                         <span class="color-indicator bg-${colorClass}"></span>
-                        ${color}
+                        ${colorName}
+                        ${hasCustomPrice ? `<small style="display:block; font-size:0.6rem; opacity:0.8; margin-top:2px;">$${color.price.toLocaleString('es-CO')}</small>` : ''}
                     </div>
                 `;
             }).join('');
@@ -732,7 +737,21 @@ function openModal(product) {
                 pill.addEventListener('click', () => {
                     pills.forEach(p => p.classList.remove('active'));
                     pill.classList.add('active');
-                    colorValueInput.value = pill.dataset.color;
+                    
+                    const idx = pill.dataset.colorIdx;
+                    const selectedC = product.colors[idx];
+                    const name = typeof selectedC === 'object' ? selectedC.name : selectedC;
+                    
+                    // Update main price if color has its own price
+                    if (typeof selectedC === 'object' && selectedC.price) {
+                        price.textContent = `$${selectedC.price.toLocaleString('es-CO')}`;
+                        price.classList.add('price-updated');
+                        setTimeout(() => price.classList.remove('price-updated'), 300);
+                    } else {
+                        price.textContent = `$${product.price.toLocaleString('es-CO')}`;
+                    }
+                    
+                    colorValueInput.value = name;
                 });
             });
         } else {
@@ -745,9 +764,21 @@ function openModal(product) {
     addToCartBtn.onclick = () => {
         if (cart) {
             let selectedColor = null;
+            let finalProduct = { ...product }; // Copy to avoid overriding global data
+
             if (product.colors && product.colors.length > 0) {
                 if (colorValueInput && colorValueInput.value) {
                     selectedColor = colorValueInput.value;
+                    
+                    // Check if selected color has a custom price
+                    const activePill = colorPillsContainer.querySelector('.color-pill.active');
+                    const cIdx = activePill ? activePill.dataset.colorIdx : null;
+                    if (cIdx !== null) {
+                        const colorObj = product.colors[cIdx];
+                        if (typeof colorObj === 'object' && colorObj.price) {
+                            finalProduct.price = colorObj.price;
+                        }
+                    }
                 } else {
                     // Visual shake effect for the color container to alert user
                     colorWrapper.style.animation = 'none';
@@ -769,7 +800,8 @@ function openModal(product) {
                     return;
                 }
             }
-            cart.addItem(product, 1, selectedColor);
+            
+            cart.addItem(finalProduct, 1, selectedColor);
             addToCartBtn.textContent = '¡AÑADIDO!';
             addToCartBtn.style.background = '#28a745';
             setTimeout(() => {

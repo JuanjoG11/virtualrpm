@@ -20,23 +20,41 @@ class ShoppingCart {
         this.updateCartUI();
     }
 
-    addItem(product, quantity = 1, selectedColor = null) {
-        const uniqueId = selectedColor ? `${product.id}-${selectedColor}` : product.id;
+    addItem(product, quantity = 1, selectedColor = null, selectedVariant = null, finalPrice = null) {
+        // Build a unique ID that includes color and variant to distinguish different versions of same product
+        let uniqueId = product.id;
+        if (selectedVariant) uniqueId += `-${selectedVariant.name.toLowerCase().replace(/\s+/g, '-')}`;
+        if (selectedColor) uniqueId += `-${selectedColor.toLowerCase().replace(/\s+/g, '-')}`;
+
         const existingItem = this.items.find(item => (item.uniqueId || item.id) === uniqueId);
+
+        // Priority: Passed finalPrice > Variant price > Base product price
+        const itemPrice = finalPrice || (selectedVariant ? selectedVariant.price : product.price);
 
         if (existingItem) {
             existingItem.quantity += quantity;
+            // Update price in case it changed (though usually constant)
+            existingItem.price = itemPrice;
         } else {
             this.items.push({
                 ...product,
                 uniqueId: uniqueId,
                 selectedColor: selectedColor,
+                selectedVariant: selectedVariant,
+                price: itemPrice, 
                 quantity: quantity
             });
         }
 
         this.saveCart();
-        this.showNotification(product.name + (selectedColor ? ` (${selectedColor})` : ''));
+        
+        // Show notification with details
+        let details = '';
+        if (selectedVariant && selectedColor) details = ` (${selectedVariant.name} - ${selectedColor})`;
+        else if (selectedVariant) details = ` (${selectedVariant.name})`;
+        else if (selectedColor) details = ` (${selectedColor})`;
+        
+        this.showNotification(product.name + details);
         this.animateCartIcon();
     }
 
@@ -366,6 +384,9 @@ class ShoppingCart {
 
         this.items.forEach(item => {
             message += `📦 *${item.name}*\n`;
+            if (item.selectedVariant) {
+                message += `   Opción: ${item.selectedVariant.name}\n`;
+            }
             if (item.selectedColor) {
                 message += `   Color: ${item.selectedColor}\n`;
             }

@@ -45,7 +45,11 @@ async function getImagesFromFolder(folder) {
 
         console.log(`🖼️ Imágenes válidas:`, imageFiles.map(f => f.name));
 
-        return imageFiles.map(file => `${STORAGE_BASE}${folder}/${file.name}`);
+        // Construct final URLs with cache-busting timestamp from updated_at metadata
+        return imageFiles.map(file => {
+            const timestamp = file.updated_at ? new Date(file.updated_at).getTime() : Date.now();
+            return `${STORAGE_BASE}${folder}/${file.name}?t=${timestamp}`;
+        });
 
     } catch (err) {
         console.error('❌ Error en getImagesFromFolder:', err);

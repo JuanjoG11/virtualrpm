@@ -2806,11 +2806,34 @@ section {
     box-shadow: 0 0 15px var(--color-accent-glow);
 }
 
+.color-pill-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+}
+
+.color-pill-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.color-pill-price {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+.color-pill.active .color-pill-price {
+    color: #000;
+}
+
 .color-indicator {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.2);
+    flex-shrink: 0;
 }
 
 /* Map specific color indicators if needed */
@@ -2876,4 +2899,80 @@ section {
 
 .bg-secuencial {
     background: linear-gradient(90deg, #ffcc00, #ff6600);
+}
+
+/* Variant Selection Styles */
+.variant-pills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+}
+
+.variant-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.variant-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+}
+
+.variant-pill.active {
+    background: var(--color-accent) !important;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 15px var(--color-accent-glow);
+    transform: scale(1.02);
+}
+
+.variant-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-white);
+    opacity: 0.8;
+}
+
+.variant-price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-white);
+}
+
+.variant-pill.active .variant-name,
+.variant-pill.active .variant-price {
+    color: #000 !important;
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.price-updated {
+    animation: pricePop 0.3s ease-out;
+}
+
+@keyframes pricePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); color: var(--color-accent); }
+    100% { transform: scale(1); }
 }
