@@ -1781,7 +1781,7 @@ section {
 /* Catalog Grid */
 .catalog-grid {
     display: none;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
     margin-top: 4rem;
     padding-top: 3rem;
@@ -2366,6 +2366,11 @@ section {
     .social-links {
         justify-content: center;
     }
+
+    .catalog-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2431,13 +2436,58 @@ section {
     }
 
     .catalog-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
     }
 
     .product-card-shop {
-        max-width: 500px;
-        margin: 0 auto;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .product-image-wrapper {
+        height: 180px;
+    }
+
+    .product-info {
+        padding: 1rem;
+    }
+
+    .product-name {
+        font-size: 0.95rem;
+        margin-bottom: 0.4rem;
+        height: 2.6rem; /* Limit to 2 lines height approx */
+    }
+
+    .product-category {
+        font-size: 0.7rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .product-desc {
+        display: none; /* Hide description on mobile to keep it compact */
+    }
+
+    .product-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+        padding-top: 0.8rem;
+        margin-top: 0.8rem;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .add-to-cart-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.6rem;
+        font-size: 0.8rem;
     }
 
     .nav-menu.active {
