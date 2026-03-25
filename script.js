@@ -707,6 +707,48 @@ function openModal(product) {
 
     loadImages();
 
+    // Handle Variants logic (newly added)
+    const variantsWrapper = document.getElementById('modalVariantsWrapper');
+    const variantPillsContainer = document.getElementById('modalVariantPills');
+    const variantValueInput = document.getElementById('modalVariantValue');
+
+    if (variantsWrapper && variantPillsContainer && variantValueInput) {
+        variantValueInput.value = ''; // Reset
+
+        if (product.variants && product.variants.length > 0) {
+            variantsWrapper.style.display = 'block';
+            variantPillsContainer.innerHTML = product.variants.map((v, idx) => `
+                <div class="variant-pill" data-v-idx="${idx}" data-v-name="${v.name}">
+                    <span class="variant-name">${v.name}</span>
+                    ${v.price ? `<span class="variant-price">$${v.price.toLocaleString('es-CO')}</span>` : ''}
+                </div>
+            `).join('');
+
+            const vPills = variantPillsContainer.querySelectorAll('.variant-pill');
+            vPills.forEach(p => {
+                p.addEventListener('click', () => {
+                    vPills.forEach(pill => pill.classList.remove('active'));
+                    p.classList.add('active');
+                    
+                    const vIdx = p.dataset.vIdx;
+                    const vObj = product.variants[vIdx];
+                    
+                    if (vObj.price) {
+                        price.textContent = `$${vObj.price.toLocaleString('es-CO')}`;
+                        price.classList.add('price-updated');
+                        setTimeout(() => price.classList.remove('price-updated'), 300);
+                    } else {
+                        price.textContent = `$${product.price.toLocaleString('es-CO')}`;
+                    }
+                    
+                    variantValueInput.value = vObj.name;
+                });
+            });
+        } else {
+            variantsWrapper.style.display = 'none';
+        }
+    }
+
     // Handle Colors logic
     const colorWrapper = document.getElementById('modalColorsWrapper');
     const colorPillsContainer = document.getElementById('modalColorPills');
@@ -764,44 +806,42 @@ function openModal(product) {
     addToCartBtn.onclick = () => {
         if (cart) {
             let selectedColor = null;
+            let selectedVariant = null;
             let finalProduct = { ...product }; // Copy to avoid overriding global data
 
+            // Check variants first
+            if (product.variants && product.variants.length > 0) {
+                if (variantValueInput && variantValueInput.value) {
+                    const activeVPill = variantPillsContainer.querySelector('.variant-pill.active');
+                    if (activeVPill) {
+                        selectedVariant = product.variants[activeVPill.dataset.vIdx];
+                        if (selectedVariant.price) finalProduct.price = selectedVariant.price;
+                    }
+                } else {
+                    variantsWrapper.classList.add('shake');
+                    setTimeout(() => variantsWrapper.classList.remove('shake'), 500);
+                    return;
+                }
+            }
+
+            // Check colors
             if (product.colors && product.colors.length > 0) {
                 if (colorValueInput && colorValueInput.value) {
                     selectedColor = colorValueInput.value;
-                    
-                    // Check if selected color has a custom price
                     const activePill = colorPillsContainer.querySelector('.color-pill.active');
-                    const cIdx = activePill ? activePill.dataset.colorIdx : null;
-                    if (cIdx !== null) {
-                        const colorObj = product.colors[cIdx];
-                        if (typeof colorObj === 'object' && colorObj.price) {
-                            finalProduct.price = colorObj.price;
-                        }
+                    if (activePill) {
+                        const cObj = product.colors[activePill.dataset.colorIdx];
+                        if (typeof cObj === 'object' && cObj.price) finalProduct.price = cObj.price;
                     }
                 } else {
-                    // Visual shake effect for the color container to alert user
-                    colorWrapper.style.animation = 'none';
-                    colorWrapper.offsetHeight; // trigger reflow
-                    colorWrapper.style.animation = 'shake 0.5s ease-in-out';
-
-                    if (!document.getElementById('shake-style')) {
-                        const style = document.createElement('style');
-                        style.id = 'shake-style';
-                        style.textContent = `
-                            @keyframes shake {
-                                0%, 100% { transform: translateX(0); }
-                                25% { transform: translateX(-5px); }
-                                75% { transform: translateX(5px); }
-                            }
-                        `;
-                        document.head.appendChild(style);
-                    }
+                    colorWrapper.classList.add('shake');
+                    setTimeout(() => colorWrapper.classList.remove('shake'), 500);
                     return;
                 }
             }
             
-            cart.addItem(finalProduct, 1, selectedColor);
+            cart.addItem(finalProduct, 1, selectedColor, selectedVariant);
+            
             addToCartBtn.textContent = '¡AÑADIDO!';
             addToCartBtn.style.background = '#28a745';
             setTimeout(() => {

@@ -63,30 +63,52 @@ const products = [
 
     // Maletas
     {
-        id: 'mal-001',
-        name: 'Maletas Rígidas 33L Par',
+        id: 'uni-maleta-expandible-001',
+        name: 'Maleta Rígida Expandible',
         category: 'maletas',
-        price: 485000,
-        image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=500&fit=crop',
-        description: 'Par de maletas laterales, material ABS, sistema de apertura rápida',
+        price: 180000,
+        image: `${SUPABASE_URL}universales/maleta-expandible/1.jpg`,
+        folder: 'universales/maleta-expandible',
+        description: 'Maleta rígida con sistema expandible de alta resistencia. Ideal para viajes largos y uso diario. Ajuste universal. Selecciona tu marca preferida.',
+        variants: [
+            { name: 'OGIO' },
+            { name: 'FOX' },
+            { name: 'DANIESE ROJA' },
+            { name: 'DANIESE NEGRA' },
+            { name: 'DANIESE ROSADA' },
+            { name: 'ALPINESTAR' },
+            { name: 'ICON' }
+        ],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
         featured: true
     },
     {
-        id: 'mal-002',
-        name: 'Baúl Top Case 45L',
+        id: 'uni-maleta-alpinestars-lona-001',
+        name: 'Maleta Alpinestars Lona',
         category: 'maletas',
-        price: 295000,
-        image: 'https://images.unsplash.com/photo-1558980664-769d59546b3d?w=500&h=500&fit=crop',
-        description: 'Capacidad para 2 cascos, resistente al agua'
+        price: 120000,
+        image: `${SUPABASE_URL}universales/maleta-alpinestars-lona/1.jpg`,
+        folder: 'universales/maleta-alpinestars-lona',
+        description: 'Maleta de lona Alpinestars de alta durabilidad. Gran capacidad, múltiples compartimentos y diseño ergonómico para moteros.',
+        colors: ['Azul', 'Amarilla', 'Blanca'],
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
     },
     {
-        id: 'mal-003',
-        name: 'Kit Maletas + Baúl',
+        id: 'uni-maleta-ogio-rigida-001',
+        name: 'Maleta Rígida Ogio Importada',
         category: 'maletas',
-        price: 725000,
-        image: 'https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=500&h=500&fit=crop',
-        description: 'Set completo touring, incluye soportes'
+        price: 275000,
+        image: `${SUPABASE_URL}universales/maleta-ogio-rigida/1.jpg`,
+        folder: 'universales/maleta-ogio-rigida',
+        description: 'Maleta rígida OGIO importada de alta gama. Diseño aerodinámico premium, compartimentos especializados y máxima protección para tus pertenencias.',
+        compatible_brands: ['universal'],
+        compatible_models: ['universal'],
+        featured: true
     },
+
 
     // Exostos
     {

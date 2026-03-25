@@ -379,6 +379,38 @@ class ShoppingCart {
             return;
         }
 
+        // --- INICIO: Lógica de Inventario Central ---
+        // Sincronizar la resta de stock con el panel administrativo
+        const savedInventory = localStorage.getItem('vrpm_inventory');
+        if (savedInventory) {
+            let inventory = JSON.parse(savedInventory);
+            let movements = JSON.parse(localStorage.getItem('vrpm_movements') || '[]');
+
+            this.items.forEach(item => {
+                const invItem = inventory.find(p => p.id === item.id);
+                if (invItem) {
+                    const prevStock = invItem.stock;
+                    invItem.stock = Math.max(0, invItem.stock - item.quantity);
+                    
+                    // Registrar el movimiento
+                    movements.unshift({
+                        id: Date.now() + Math.random(),
+                        productId: item.id,
+                        productName: item.name,
+                        type: 'VENTA WEB',
+                        quantity: -item.quantity,
+                        prevStock: prevStock,
+                        newStock: invItem.stock,
+                        date: new Date().toISOString()
+                    });
+                }
+            });
+
+            localStorage.setItem('vrpm_inventory', JSON.stringify(inventory));
+            localStorage.setItem('vrpm_movements', JSON.stringify(movements));
+        }
+        // --- FIN: Lógica de Inventario Central ---
+
         // Generate WhatsApp message
         let message = '🏍️ *PEDIDO VIRTUAL RPM*\n\n';
 

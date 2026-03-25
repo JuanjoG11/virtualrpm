@@ -2911,12 +2911,16 @@ section {
     background-color: #0000ff;
 }
 
-.bg-rojo {
+.bg-rojo, .bg-roja {
     background-color: #ff0000;
 }
 
-.bg-amarillo {
+.bg-amarillo, .bg-amarilla {
     background-color: #ffff00;
+}
+
+.bg-blanco, .bg-blanca {
+    background-color: #ffffff;
 }
 
 .bg-verde {
