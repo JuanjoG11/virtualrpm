@@ -2955,6 +2955,18 @@ section {
     background: linear-gradient(90deg, #ffcc00, #ff6600);
 }
 
+.bg-morada {
+    background-color: #800080;
+}
+
+.bg-plateada {
+    background-color: #c0c0c0;
+}
+
+.bg-negra {
+    background-color: #000;
+}
+
 /* Variant Selection Styles */
 .variant-pills-grid {
     display: grid;

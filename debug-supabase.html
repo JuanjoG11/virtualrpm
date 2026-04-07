@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Debug Supabase - VIRTUAL RPM</title>
+    <style>
+        body { font-family: sans-serif; background: #1a1a1a; color: #eee; padding: 2rem; }
+        .folder-check { background: #222; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #007bff; }
+        .file-list { margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .file-item { background: #333; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
+        .error { color: #ff4d4d; }
+        .success { color: #2ecc71; }
+        h1 { color: #007bff; }
+        pre { background: #000; padding: 1rem; border-radius: 4px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Explorador de Archivos Supabase</h1>
+    <p>Este archivo ayuda a verificar qué carpetas y archivos existen realmente en el bucket 'productos'.</p>
+    
+    <div id="debugOutput">Cargando carpetas...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        async function runDebug() {
+            const output = document.getElementById('debugOutput');
+            output.innerHTML = '';
+
+            // Test folders from products-data
+            const foldersToTest = [
+                'universales',
+                'universales/pechera-biker',
+                'universales/maleta-expandible',
+                'mt15',
+                'duke',
+                '' // root
+            ];
+
+            for (const folder of foldersToTest) {
+                const folderDiv = document.createElement('div');
+                folderDiv.className = 'folder-check';
+                folderDiv.innerHTML = `<strong>📁 Carpeta: ${folder || '(raíz)'}</strong>`;
+                output.appendChild(folderDiv);
+
+                try {
+                    const { data, error } = await supabaseClient.storage
+                        .from('productos')
+                        .list(folder, { limit: 50 });
+
+                    if (error) {
+                        folderDiv.innerHTML += `<div class="error">❌ Error: ${error.message}</div>`;
+                        continue;
+                    }
+
+                    if (!data || data.length === 0) {
+                        folderDiv.innerHTML += `<div class="error">📂 Carpeta vacía o no existe</div>`;
+                        continue;
+                    }
+
+                    const list = document.createElement('div');
+                    list.className = 'file-list';
+                    data.forEach(file => {
+                        const item = document.createElement('div');
+                        item.className = 'file-item';
+                        item.textContent = file.name;
+                        list.appendChild(item);
+                    });
+                    folderDiv.appendChild(list);
+                    folderDiv.innerHTML += `<div class="success">✅ ${data.length} elementos encontrados</div>`;
+
+                } catch (e) {
+                    folderDiv.innerHTML += `<div class="error">❌ Excepción: ${e.message}</div>`;
+                }
+            }
+        }
+
+        window.onload = runDebug;
+    </script>
+</body>
+</html>

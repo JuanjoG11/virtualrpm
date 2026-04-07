@@ -364,13 +364,23 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
 
     // Filter by category if not 'all'
     if (category !== 'all') {
-        filteredProducts = filteredProducts.filter(p => p.category === category);
+        if (category === 'indumentaria') {
+            filteredProducts = filteredProducts.filter(p => p.category === 'indumentaria' || p.category === 'maletas' || p.category === 'pecheras');
+        } else {
+            filteredProducts = filteredProducts.filter(p => p.category === category);
+        }
     }
 
     // Filter by brand
     if (brandId) {
         filteredProducts = filteredProducts.filter(p => {
             if (!p.compatible_brands) return !modelId;
+            
+            // If the brand is indumentaria, only show products explicitly for indumentaria (do not show universal moto accessories)
+            if (brandId === 'indumentaria') {
+                return p.compatible_brands.includes('indumentaria');
+            }
+            
             return p.compatible_brands.includes(brandId) || p.compatible_brands.includes('universal');
         });
     }
@@ -382,7 +392,42 @@ function renderProducts(category = 'all', brandId = null, modelId = null) {
             if (p.excluded_models && p.excluded_models.includes(modelId)) return false;
 
             if (!p.compatible_models) return false;
+            
+            // Si la marca es indumentaria, solo mostrar de ese modelo específico (sin universales)
+            if (selectedBrand && selectedBrand.id === 'indumentaria') {
+                return p.compatible_models.includes(modelId);
+            }
+            
             return p.compatible_models.includes(modelId) || p.compatible_models.includes('universal');
+        });
+    }
+
+    // ORDENAMIENTO: Productos específicos primero, universales al final
+    if (brandId || modelId) {
+        filteredProducts.sort((a, b) => {
+            // Prioridad 1: Modelo específico (que no sea universal)
+            if (modelId) {
+                const aMatchModel = a.compatible_models && a.compatible_models.includes(modelId) && a.compatible_models[0] !== 'universal';
+                const bMatchModel = b.compatible_models && b.compatible_models.includes(modelId) && b.compatible_models[0] !== 'universal';
+                if (aMatchModel && !bMatchModel) return -1;
+                if (!aMatchModel && bMatchModel) return 1;
+            }
+
+            // Prioridad 2: Marca específica (que no sea universal)
+            if (brandId) {
+                const aMatchBrand = a.compatible_brands && a.compatible_brands.includes(brandId) && a.compatible_brands[0] !== 'universal';
+                const bMatchBrand = b.compatible_brands && b.compatible_brands.includes(brandId) && b.compatible_brands[0] !== 'universal';
+                if (aMatchBrand && !bMatchBrand) return -1;
+                if (!aMatchBrand && bMatchBrand) return 1;
+            }
+
+            // Prioridad 3: No universales vs universales
+            const aIsUniversal = a.compatible_brands && (a.compatible_brands.includes('universal'));
+            const bIsUniversal = b.compatible_brands && (b.compatible_brands.includes('universal'));
+            if (!aIsUniversal && bIsUniversal) return -1;
+            if (aIsUniversal && !bIsUniversal) return 1;
+
+            return 0;
         });
     }
 

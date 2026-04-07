@@ -61,7 +61,7 @@ const products = [
         description: 'Sistema plegable, protección en caídas'
     },
 
-    // Maletas
+    // Maletas (Exclusivas de Indumentaria)
     {
         id: 'uni-maleta-expandible-001',
         name: 'Maleta Rígida Expandible',
@@ -69,18 +69,14 @@ const products = [
         price: 180000,
         image: `${SUPABASE_URL}universales/maleta-expandible/1.jpg`,
         folder: 'universales/maleta-expandible',
-        description: 'Maleta rígida con sistema expandible de alta resistencia. Ideal para viajes largos y uso diario. Ajuste universal. Selecciona tu marca preferida.',
+        description: 'Maleta rígida con sistema expandible de alta resistencia. Ideal para viajes largos y uso diario. Selecciona tu marca preferida.',
         variants: [
-            { name: 'OGIO' },
-            { name: 'FOX' },
-            { name: 'DANIESE ROJA' },
-            { name: 'DANIESE NEGRA' },
-            { name: 'DANIESE ROSADA' },
-            { name: 'ALPINESTAR' },
-            { name: 'ICON' }
+            { name: 'OGIO' }, { name: 'FOX' }, { name: 'DANIESE ROJA' }, 
+            { name: 'DANIESE NEGRA' }, { name: 'DANIESE ROSADA' }, 
+            { name: 'ALPINESTAR' }, { name: 'ICON' }
         ],
-        compatible_brands: ['universal'],
-        compatible_models: ['universal'],
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['maletas'],
         featured: true
     },
     {
@@ -92,8 +88,8 @@ const products = [
         folder: 'universales/maleta-alpinestars-lona',
         description: 'Maleta de lona Alpinestars de alta durabilidad. Gran capacidad, múltiples compartimentos y diseño ergonómico para moteros.',
         colors: ['Azul', 'Amarilla', 'Blanca'],
-        compatible_brands: ['universal'],
-        compatible_models: ['universal'],
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['maletas'],
         featured: true
     },
     {
@@ -104,8 +100,22 @@ const products = [
         image: `${SUPABASE_URL}universales/maleta-ogio-rigida/1.jpg`,
         folder: 'universales/maleta-ogio-rigida',
         description: 'Maleta rígida OGIO importada de alta gama. Diseño aerodinámico premium, compartimentos especializados y máxima protección para tus pertenencias.',
-        compatible_brands: ['universal'],
-        compatible_models: ['universal'],
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['maletas'],
+        featured: true
+    },
+
+    // Pecheras (Indumentaria)
+    {
+        id: 'uni-pechera-biker-001',
+        name: 'Pechera Biker Multimarca',
+        category: 'pecheras',
+        price: 85000,
+        image: `${SUPABASE_URL}universales/pechera-biker/1.jpg`,
+        folder: 'universales/pechera-biker',
+        description: 'Pechera protectora Biker de alta resistencia. Diseño ergonómico, ajustable y multimarca. Máxima protección y comodidad para tus recorridos.',
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['pecheras'],
         featured: true
     },
 
@@ -144,7 +154,9 @@ const products = [
         category: 'indumentaria',
         price: 185000,
         image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop',
-        description: 'Protecciones carbono, piel premium, touch screen'
+        description: 'Protecciones carbono, piel premium, touch screen',
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['guantes']
     },
     {
         id: 'ind-002',
@@ -152,7 +164,9 @@ const products = [
         category: 'indumentaria',
         price: 385000,
         image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&h=500&fit=crop',
-        description: 'Protecciones CE, impermeable, ventilación'
+        description: 'Protecciones CE, impermeable, ventilación',
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['chaquetas']
     },
     {
         id: 'ind-003',
@@ -161,7 +175,9 @@ const products = [
         price: 465000,
         image: 'https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=500&h=500&fit=crop',
         description: 'Protección tobillo, suela antideslizante',
-        featured: true
+        featured: true,
+        compatible_brands: ['indumentaria'],
+        compatible_models: ['botas']
     },
 
     // Protecciones
@@ -1060,11 +1076,198 @@ const products = [
         compatible_brands: ['universal'],
         compatible_models: ['universal'],
         featured: true
+    },
+    {
+        id: 'bajaj-agarradera-tanque-001',
+        name: 'Agarradera de Tanque Bajaj',
+        category: 'accesorios',
+        price: 170000,
+        image: `${SUPABASE_URL}bajaj/agarradera-tanque/1.jpg`,
+        folder: 'bajaj/agarradera-tanque',
+        description: 'Agarradera de tanque ergonómica para Bajaj. Brinda seguridad al pasajero y un aspecto deportivo. Fabricada en aluminio de alta resistencia.',
+        colors: ['Plateada', 'Negra', 'Tornasol', 'Morada'],
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'pulsar160'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-tornasol',
+        name: 'Cúpula Doble Burbuja Tornasol',
+        category: 'cupulas',
+        price: 160000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja',
+        description: 'Cúpula doble burbuja con acabado tornasol premium. Mejora la aerodinámica y le da un aspecto agresivo y colorido a tu moto.',
+        variants: [
+            { name: 'SIN BASES', price: 160000 },
+            { name: 'CON BASES', price: 190000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-traslucida',
+        name: 'Cúpula Doble Burbuja Tornasol Traslúcida',
+        category: 'cupulas',
+        price: 160000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja-traslucida/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja-traslucida',
+        description: 'Cúpula doble burbuja con acabado tornasol traslúcido. Permite una visibilidad clara manteniendo un estilo tornasol vibrante.',
+        variants: [
+            { name: 'SIN BASES', price: 160000 },
+            { name: 'CON BASES', price: 190000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-plateada',
+        name: 'Cúpula Doble Burbuja Plateada',
+        category: 'cupulas',
+        price: 160000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja-plateada/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja-plateada',
+        description: 'Cúpula doble burbuja con acabado plateado espejado. Ofrece una estética futurista y una excelente protección contra el viento.',
+        variants: [
+            { name: 'SIN BASES', price: 160000 },
+            { name: 'CON BASES', price: 190000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-humo',
+        name: 'Cúpula Doble Burbuja Humo',
+        category: 'cupulas',
+        price: 130000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja-humo/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja-humo',
+        description: 'Cúpula doble burbuja en acabado humo clásico. Combina protección aerodinámica con un toque sobrio y elegante.',
+        variants: [
+            { name: 'SIN BASES', price: 130000 },
+            { name: 'CON BASES', price: 165000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-carbono',
+        name: 'Cúpula Doble Burbuja Carbono',
+        category: 'cupulas',
+        price: 160000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja-carbono/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja-carbono',
+        description: 'Cúpula doble burbuja con acabado tipo fibra de carbono. El look más deportivo y ligero para tu moto.',
+        variants: [
+            { name: 'SIN BASES', price: 160000 },
+            { name: 'CON BASES', price: 190000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'uni-cupula-doble-burbuja-negra',
+        name: 'Cúpula Doble Burbuja Negra',
+        category: 'cupulas',
+        price: 130000,
+        image: `${SUPABASE_URL}bajaj/cupula-doble-burbuja-negra/1.jpg`,
+        folder: 'bajaj/cupula-doble-burbuja-negra',
+        description: 'Cúpula doble burbuja en acabado negro sólido. Un look clásico y agresivo que combina con cualquier color de moto.',
+        variants: [
+            { name: 'SIN BASES', price: 130000 },
+            { name: 'CON BASES', price: 165000 }
+        ],
+        compatible_brands: ['bajaj', 'suzuki', 'tvs'],
+        compatible_models: ['ns200', 'dominar400', 'ns400', 'ns160', 'gixxersf', 'apache'],
+        featured: true
+    },
+    {
+        id: 'bajaj-stop-integrado-ns',
+        name: 'Stop Integrado Tipo Panal NS 200 / NS 400',
+        category: 'accesorios',
+        price: 130000,
+        image: `${SUPABASE_URL}bajaj/stop-integrado-ns/1.jpg`,
+        folder: 'bajaj/stop-integrado-ns',
+        description: 'Stop integrado con direccionales para Bajaj Pulsar NS 200 y NS 400. Mejora la visibilidad y estética trasera de tu moto.',
+        colors: ['Rojo', 'Azul', 'Blanco'],
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200', 'ns400'],
+        featured: true
+    },
+    {
+        id: 'bajaj-stop-integrado-escalera-ns',
+        name: 'Stop Integrado Tipo Escalera NS 200 / NS 400',
+        category: 'accesorios',
+        price: 130000,
+        image: `${SUPABASE_URL}bajaj/stop-integrado-escalera-ns/1.jpg`,
+        folder: 'bajaj/stop-integrado-escalera-ns',
+        description: 'Stop integrado con diseño tipo escalera y direccionales para Pulsar NS 200 y NS 400. Un estilo único y moderno.',
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200', 'ns400'],
+        featured: true
+    },
+    {
+        id: 'bajaj-stomp-grips-ns200',
+        name: 'Kit Stomp Grips NS 200',
+        category: 'accesorios',
+        price: 110000,
+        image: `${SUPABASE_URL}bajaj/stomp-grips-ns200/1.jpg`,
+        folder: 'bajaj/stomp-grips-ns200',
+        description: 'Kit de grips laterales para tanque (Stomp Grips) diseñados específicamente para Pulsar NS 200. Mejoran el agarre de las piernas al frenar y curvear.',
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200'],
+        featured: true
+    },
+    {
+        id: 'bajaj-aro-tapa-tanque-ns200',
+        name: 'Aro Tapa Tanque NS 200',
+        category: 'accesorios',
+        price: 30000,
+        image: `${SUPABASE_URL}bajaj/aro-tapa-tanque-ns200/1.jpg`,
+        folder: 'bajaj/aro-tapa-tanque-ns200',
+        description: 'Aro decorativo para la tapa del tanque de Pulsar NS 200. Disponible en acabados plateado y negro.',
+        colors: ['Plateado', 'Negro'],
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200'],
+        featured: true
+    },
+    {
+        id: 'bajaj-farola-led-ns',
+        name: 'Farola LED NS 200 / NS 160',
+        category: 'accesorios',
+        price: 300000,
+        image: `${SUPABASE_URL}bajaj/farola-led-ns/1.jpg`,
+        folder: 'bajaj/farola-led-ns',
+        description: 'Farola LED de alta potencia para Bajaj Pulsar NS 200 y NS 160. Mejora drásticamente la visibilidad nocturna y le da un aspecto moderno a tu moto.',
+        variants: [
+            { name: 'SIN DIRECCIONALES', price: 300000 },
+            { name: 'CON DIRECCIONALES', price: 330000 }
+        ],
+        compatible_brands: ['bajaj'],
+        compatible_models: ['ns200', 'ns160'],
+        featured: true
     }
 ];
 
 // Brands and Models Database
 const motorcycles = [
+    {
+        id: 'indumentaria',
+        name: 'INDUMENTARIA',
+        logo: 'https://cdn-icons-png.flaticon.com/512/3228/3228308.png', 
+        models: [
+            { id: 'guantes', name: 'Guantes' },
+            { id: 'chaquetas', name: 'Chaquetas' },
+            { id: 'botas', name: 'Botas' },
+            { id: 'maletas', name: 'Maletas' },
+            { id: 'pecheras', name: 'Pecheras' }
+        ]
+    },
     {
         id: 'yamaha',
         name: 'YAMAHA',
@@ -1101,7 +1304,8 @@ const motorcycles = [
             { id: 'vstrom650', name: 'V-Strom 650' },
             { id: 'dr650', name: 'DR650' },
             { id: 'gixxer150', name: 'GIXXER 150' },
-            { id: 'gixxer250', name: 'GIXXER 250' }
+            { id: 'gixxer250', name: 'GIXXER 250' },
+            { id: 'gixxersf', name: 'GIXXER SF' }
         ]
     },
     {
@@ -1143,7 +1347,18 @@ const motorcycles = [
         logo: 'images/bajaj.png',
         models: [
             { id: 'ns200', name: 'NS 200' },
-            { id: 'dominar400', name: 'Dominar 400' }
+            { id: 'dominar400', name: 'Dominar 400' },
+            { id: 'ns400', name: 'NS 400' },
+            { id: 'pulsar160', name: 'Pulsar 160' },
+            { id: 'ns160', name: 'NS 160' }
+        ]
+    },
+    {
+        id: 'tvs',
+        name: 'TVS',
+        logo: 'https://companieslogo.com/img/orig/TVSMOTOR.NS-50798e29.png?t=1612544229',
+        models: [
+            { id: 'apache', name: 'Apache (Todas)' }
         ]
     }
 ];
@@ -1154,6 +1369,7 @@ const categories = {
     espejos: { name: 'Espejos', icon: '🔍' },
     maletas: { name: 'Maletas', icon: '💼' },
     exostos: { name: 'Exostos', icon: '🔥' },
+    pecheras: { name: 'Pecheras', icon: '🛡️' },
     indumentaria: { name: 'Indumentaria', icon: '🧥' },
     protecciones: { name: 'Protecciones', icon: '🛡️' },
     caballetes: { name: 'Caballetes', icon: '⚙️' },
