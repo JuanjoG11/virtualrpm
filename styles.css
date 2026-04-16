@@ -772,7 +772,7 @@ section {
     color: var(--color-accent);
 }
 
-.models-list {
+.models-list, .versions-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;

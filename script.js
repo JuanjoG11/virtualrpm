@@ -243,6 +243,7 @@ function initBrandSelector() {
 
 let selectedBrand = null;
 let selectedModel = null;
+let selectedVersion = null;
 
 function selectBrand(brandId, cardElement) {
     // UI Update
@@ -251,6 +252,11 @@ function selectBrand(brandId, cardElement) {
 
     selectedBrand = motorcycles.find(b => b.id === brandId);
     selectedModel = null; // Reset model on brand change
+    selectedVersion = null; // Reset version
+
+    // Hide version selection
+    const versionArea = document.getElementById('versionSelectionArea');
+    if (versionArea) versionArea.style.display = 'none';
 
     // Show models area
     const modelArea = document.getElementById('modelSelectionArea');
@@ -282,11 +288,54 @@ function selectModel(modelId, btnElement) {
     btnElement.classList.add('active');
 
     selectedModel = modelId;
+    selectedVersion = null;
 
-    const modelName = btnElement.textContent;
+    const modelData = selectedBrand.models.find(m => m.id === modelId);
+    const versionArea = document.getElementById('versionSelectionArea');
+    const versionsList = document.getElementById('versionsList');
+
+    if (modelData && modelData.versions) {
+        // Show versions selection instead of entering catalog
+        versionArea.style.display = 'block';
+        versionsList.innerHTML = modelData.versions.map(v => `
+            <button class="model-btn version-btn" data-version-id="${v.id}">${v.name}</button>
+        `).join('');
+
+        // Version click events
+        versionsList.querySelectorAll('.version-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectVersion(btn.dataset.versionId, btn);
+            });
+        });
+
+        // Smooth scroll to versions
+        setTimeout(() => {
+            versionArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+        
+        // Hide products until version is picked
+        document.getElementById('catalogGrid').style.display = 'none';
+        return;
+    }
+
+    // No versions, proceed to catalog
+    if (versionArea) versionArea.style.display = 'none';
+    enterCatalog(modelId, btnElement.textContent);
+}
+
+function selectVersion(versionId, btnElement) {
+    document.querySelectorAll('.version-btn').forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+    
+    selectedVersion = versionId;
+    selectedModel = versionId; // IMPORTANT: Update the global selectedModel to the versionId for filtering
+    enterCatalog(versionId, btnElement.textContent);
+}
+
+function enterCatalog(targetId, displayName) {
     const brandName = selectedBrand.name;
 
-    // Show the catalog grid directly (skip category cards step)
+    // Show the catalog grid directly
     const catalogGrid = document.getElementById('catalogGrid');
     const productsSection = document.getElementById('productos');
     const categoryCards = document.querySelector('.products-grid');
@@ -300,11 +349,11 @@ function selectModel(modelId, btnElement) {
             setTimeout(() => { categoryCards.style.display = 'none'; }, 400);
         }
 
-        // Update section header to show selected model
+        // Update section header
         const sectionHeader = productsSection.querySelector('.section-header');
         if (sectionHeader) {
             sectionHeader.innerHTML = `
-                <h2 class="section-title">ACCESORIOS ${brandName} ${modelName}</h2>
+                <h2 class="section-title">ACCESORIOS ${brandName} ${displayName}</h2>
                 <div class="title-underline"></div>
                 <p class="section-description">Productos compatibles con tu moto</p>
                 <button id="backToCategoriesBtn" style="
@@ -320,6 +369,7 @@ function selectModel(modelId, btnElement) {
             // Back button logic
             document.getElementById('backToCategoriesBtn').addEventListener('click', () => {
                 selectedModel = null;
+                selectedVersion = null;
                 if (categoryCards) {
                     categoryCards.style.display = 'grid';
                     setTimeout(() => {
@@ -343,7 +393,7 @@ function selectModel(modelId, btnElement) {
         catalogGrid.style.transition = 'all 0.5s ease';
 
         setTimeout(() => {
-            renderProducts('all', selectedBrand.id, modelId);
+            renderProducts('all', selectedBrand.id, targetId);
             catalogGrid.style.opacity = '1';
             catalogGrid.style.transform = 'translateY(0)';
         }, 100);

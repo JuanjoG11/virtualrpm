@@ -1,0 +1,9 @@
+
+// Helper global para abrir el modal desde el catálogo premium
+window.openProductModalByEvent = (id) => {
+    const product = productsList.find(p => p.id === id);
+    if (product && typeof openModal === 'function') {
+        openModal(product);
+    }
+};
+

@@ -1490,12 +1490,137 @@ const products = [
         name: 'Protector de Radiador MT-09 V3 / V4',
         category: 'protecciones',
         price: 135000,
-        image: `${SUPABASE_URL}yamaha/protector-radiador-mt09-v3-v4/1.jpg`,
-        folder: 'yamaha/protector-radiador-mt09-v3-v4',
+        image: `${SUPABASE_URL}mt09/protector-radiador-v3-v4/1.jpg`,
+        folder: 'mt09/protector-radiador-v3-v4',
         description: 'Protector de radiador para Yamaha MT-09 (versiones V3 y V4). Indispensable para evitar daños al radiador por piedras o partículas del camino. Disponibles en acabados Negro y Cromado.',
         colors: ['Cromado', 'Negro'],
         compatible_brands: ['yamaha'],
-        compatible_models: ['mt09'],
+        compatible_models: ['mt09-v3', 'mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-estabilizador-direccion',
+        name: 'Estabilizador de Dirección MT-09',
+        category: 'accesorios',
+        price: 490000,
+        image: `${SUPABASE_URL}mt09/estabilizador-direccion/1.jpg`,
+        folder: 'mt09/estabilizador-direccion',
+        description: 'Estabilizador de dirección de alta precisión para Yamaha MT-09. Mejora la estabilidad a altas velocidades y evita movimientos bruscos del manubrio. El precio ya incluye la instalación profesional en nuestro taller.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v1-v2', 'mt09-v3', 'mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-sliders-motor-alto-impacto',
+        name: 'Sliders de Motor Alto Impacto MT-09',
+        category: 'protecciones',
+        price: 400000,
+        image: `${SUPABASE_URL}mt09/sliders-motor-alto-impacto/1.jpg`,
+        folder: 'mt09/sliders-motor-alto-impacto',
+        description: 'Sliders de motor de alto impacto diseñados específicamente para la Yamaha MT-09 (V3 y V4). Fabricados en materiales de alta resistencia para absorber impactos y proteger el motor y chasis en caso de caídas.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3', 'mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-full-system-v3-v4',
+        name: 'Full System Exosto MT-09 V3 / V4',
+        category: 'exostos',
+        price: 1450000,
+        image: `${SUPABASE_URL}mt09/full-system-v3-v4/1.jpg`,
+        folder: 'mt09/full-system-v3-v4',
+        description: 'Sistema de escape completo (Full System) para Yamaha MT-09 (V3 y V4). Optimiza el flujo de gases, reduce el peso y entrega un sonido potente y deportivo. Disponible en acabados Tornasol y Cromado.',
+        colors: [
+            { name: 'Cromado', price: 1450000 },
+            { name: 'Tornasol', price: 1550000 }
+        ],
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3', 'mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-fender-eliminator-abatible-v3',
+        name: 'Fender Eliminator Abatible MT-09 V3',
+        category: 'accesorios',
+        price: 130000,
+        image: `${SUPABASE_URL}mt09/fender-eliminator-abatible-v3/1.jpg`,
+        folder: 'mt09/fender-eliminator-abatible-v3',
+        description: 'Portaplaca abatible (Fender Eliminator) para Yamaha MT-09 V3. Diseño aerodinámico y resistente que permite ajustar la inclinación de la placa. Ideal para mejorar la estética deportiva de la moto.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3'],
+        featured: false
+    },
+    {
+        id: 'mt09-cupula-v3',
+        name: 'Cúpula Deportiva MT-09 V3',
+        category: 'cupulas',
+        price: 195000,
+        image: `${SUPABASE_URL}mt09/cupula-v3/1.jpg`,
+        folder: 'mt09/cupula-v3',
+        description: 'Cúpula deportiva de alto impacto para Yamaha MT-09 V3. Mejora la aerodinámica y protege contra el viento en carretera, manteniendo el estilo agresivo de la moto. Fácil instalación.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3'],
+        featured: true
+    },
+    {
+        id: 'mt09-cupula-v4',
+        name: 'Cúpula Deportiva MT-09 V4 (2024)',
+        category: 'cupulas',
+        price: 300000,
+        image: `${SUPABASE_URL}mt09/cupula-v4/1.jpg`,
+        folder: 'mt09/cupula-v4',
+        description: 'Cúpula aerodinámica exclusiva para la nueva Yamaha MT-09 V4. Mejora significativamente el confort en ruta y resalta el diseño futurista del nuevo modelo 2024. Calidad premium.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-aleron-frontal-v4',
+        name: 'Alerón Frontal MT-09 V4',
+        category: 'accesorios',
+        price: 240000,
+        image: `${SUPABASE_URL}mt09/aleron-frontal-v4/1.jpg`,
+        folder: 'mt09/aleron-frontal-v4',
+        description: 'Alerón frontal aerodinámico (Downforce) diseñado para la Yamaha MT-09 V4. Mejora la estabilidad a alta velocidad y le da un aspecto mucho más agresivo y de competencia inspirado en MotoGP.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-aleron-frontal-v3',
+        name: 'Alerón Frontal MT-09 V3',
+        category: 'accesorios',
+        price: 200000,
+        image: `${SUPABASE_URL}mt09/aleron-frontal-v3/1.jpg`,
+        folder: 'mt09/aleron-frontal-v3',
+        description: 'Alerón frontal deportivo diseñado específicamente para la Yamaha MT-09 V3. Aumenta la carga aerodinámica delantera y personaliza la estética con un toque racing de alto nivel. Resistente y ligero.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3'],
+        featured: true
+    },
+    {
+        id: 'mt09-protectores-carcasas-gbracing',
+        name: 'Protectores de Carcasas GB Racing MT-09 V3 / V4',
+        category: 'protecciones',
+        price: 340000,
+        image: `${SUPABASE_URL}mt09/protectores-carcasas-gbracing/1.jpg`,
+        folder: 'mt09/protectores-carcasas-gbracing',
+        description: 'Kit de protectores de motor GB Racing para Yamaha MT-09 (V3 y V4). Ofrece una protección superior para las carcasas del motor en caso de arrastre o caída. Disponibles en acabados Negro y Carbono.',
+        colors: ['Negro', 'Carbono'],
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v3', 'mt09-v4'],
+        featured: true
+    },
+    {
+        id: 'mt09-protector-motor-mg',
+        name: 'Protector de Motor MG MT-09',
+        category: 'protecciones',
+        price: 310000,
+        image: `${SUPABASE_URL}mt09/protector-motor-mg/1.jpg`,
+        folder: 'mt09/protector-motor-mg',
+        description: 'Defensa o protector de motor marca MG para Yamaha MT-09. Diseño robusto y minimalista que protege las tapas del motor contra golpes y rayones sin comprometer la estética de la moto.',
+        compatible_brands: ['yamaha'],
+        compatible_models: ['mt09-v1-v2', 'mt09-v3', 'mt09-v4'],
         featured: true
     }
 ];
@@ -1521,7 +1646,15 @@ const motorcycles = [
         models: [
             { id: 'mt03', name: 'MT-03' },
             { id: 'mt07', name: 'MT-07' },
-            { id: 'mt09', name: 'MT-09' },
+            { 
+                id: 'mt09', 
+                name: 'MT-09',
+                versions: [
+                    { id: 'mt09-v1-v2', name: 'Versión 1 y 2' },
+                    { id: 'mt09-v3', name: 'Versión 3 (2021+)' },
+                    { id: 'mt09-v4', name: 'Versión 4 (2024+)' }
+                ]
+            },
             { id: 'mt15', name: 'MT-15' },
             { id: 'r1', name: 'YZF-R1' },
             { id: 'r6', name: 'YZF-R6' },
